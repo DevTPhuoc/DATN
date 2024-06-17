@@ -20,30 +20,30 @@ function Header(){
 							<li class="nav-item active"><NavLink to="/home" className="nav-link active"> Home</NavLink></li>
 							<li class="nav-item submenu dropdown">
 								<a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Shop</a>
-								<ul class="dropdown-menu" style={{display: "none"}}>
-									<li class="nav-item"><a class="nav-link" href="category.html">Shop Category</a></li>
-									<li class="nav-item"><a class="nav-link" href="single-product.html">Product Details</a></li>
-									<li class="nav-item"><a class="nav-link" href="checkout.html">Product Checkout</a></li>
-									<li class="nav-item"><a class="nav-link" href="cart.html">Shopping Cart</a></li>
-									<li class="nav-item"><a class="nav-link" href="confirmation.html">Confirmation</a></li>
+								<ul class="dropdown-menu">
+									<li class="nav-item"><NavLink to="/ShopCategory "  className="nav-link active">Shop Category</NavLink></li>
+									<li class="nav-item"><NavLink to="/ProductDetail "  className="nav-link active">Product Detail</NavLink></li>
+									<li class="nav-item"><NavLink to="/ProductCheckout "  className="nav-link active">Product Checkout</NavLink></li>
+									<li class="nav-item"><NavLink to="/ShoppingCart "  className="nav-link active">Shopping Cart</NavLink></li>
+									<li class="nav-item"><NavLink to="/Confirmation "  className="nav-link active">Confirmation</NavLink></li>
 								</ul>
 							</li>
 							<li class="nav-item submenu dropdown">
 								<a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Blog</a>
-								<ul class="dropdown-menu" style={{display: "none"}}>
-									<li class="nav-item"><a class="nav-link" href="blog.html">Blog</a></li>
-									<li class="nav-item"><a class="nav-link" href="single-blog.html">Blog Details</a></li>
+								<ul class="dropdown-menu" >
+									<li class="nav-item"><NavLink to="/Blog "  className="nav-link active">Blog</NavLink></li>
+									<li class="nav-item"><NavLink to="/BlogDetail "  className="nav-link active">Blog Detail</NavLink></li>
 								</ul>
 							</li>
 							<li class="nav-item submenu dropdown">
 								<a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Pages</a>
-								<ul class="dropdown-menu" style={{display: "none"}}>
-									<li class="nav-item"><a class="nav-link" href="login.html">Login</a></li>
-									<li class="nav-item"><a class="nav-link" href="tracking.html">Tracking</a></li>
-									<li class="nav-item"><a class="nav-link" href="elements.html">Elements</a></li>
+								<ul class="dropdown-menu" >
+									<li class="nav-item"><NavLink to="/Login "  className="nav-link active">Login</NavLink></li>
+									<li class="nav-item"><NavLink to="/Tracking "  className="nav-link active">Tracking</NavLink></li>
+									
 								</ul>
 							</li>
-							<li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
+							<li class="nav-item"><NavLink to="/Contact "  className="nav-link active">Contact</NavLink></li>
 						</ul>
 						<ul class="nav navbar-nav navbar-right">
 							<li class="nav-item"><a href="#" class="cart"><span class="ti-bag"></span></a></li>

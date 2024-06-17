@@ -1,5 +1,6 @@
 import 'tailwindcss/tailwind.css';
 import bg from '../../img/banner/banner-img.png'
+import c1 from '../../img/category/c1.jpg'
 
 import { NavLink } from "react-router-dom";
 function Home(){
@@ -187,7 +188,7 @@ function Home(){
 						<div class="col-lg-8 col-md-8">
 							<div class="single-deal">
 								<div class="overlay"></div>
-								<img class="img-fluid w-100" src="img/category/c1.jpg" alt=""></img>
+								<img class="img-fluid w-100" src={c1} alt=""></img>
 								<a href="img/category/c1.jpg" class="img-pop-up" target="_blank">
 									<div class="deal-details">
 										<h6 class="deal-title">Sneaker for Sports</h6>
