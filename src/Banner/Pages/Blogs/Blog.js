@@ -77,10 +77,10 @@ function Blog(){
                             <div class="col-md-3">
                                 <div class="blog_info text-right">
                                     <div class="post_tag">
-                                        <a href="#">Food,</a>
-                                        <a class="active" href="#">Technology,</a>
-                                        <a href="#">Politics,</a>
-                                        <a href="#">Lifestyle</a>
+                                    <a href="#">Những Điểu Bạn Chưa Biết </a>
+                                        <a class="active" href="https://saigonsneaker.com/blog/nike-air-mag-doi-giay-dat-nhat-the-gioi/">Đôi giày đắt nhất thế giới </a>
+                                       
+                                       
                                     </div>
                                     <ul class="blog_meta list">
                                         <li><a href="#">Mark wiens<i class="lnr lnr-user"></i></a></li>

@@ -8,10 +8,10 @@ function Confirmation(){
 		<div class="container">
 			<div class="breadcrumb-banner d-flex flex-wrap align-items-center justify-content-end">
 				<div class="col-first">
-					<h1>Confirmation</h1>
+					<h1>Thông Tin Đơn Hàng</h1>
 					<nav class="d-flex align-items-center">
-						<a href="index.html">Home<span class="lnr lnr-arrow-right"></span></a>
-						<a href="category.html">Confirmation</a>
+						<a href="index.html">Trang Chủ<span class="lnr lnr-arrow-right"></span></a>
+						<a href="category.html">Thông Tin Đơn Hàng</a>
 					</nav>
 				</div>
 			</div>
@@ -20,22 +20,23 @@ function Confirmation(){
 
     <section class="order_details section_gap">
 		<div class="container">
-			<h3 class="title_confirmation">Thank you. Your order has been received.</h3>
+			<h3 class="title_confirmation">Cảm ơn. Đơn đặt hàng của bạn đã được nhận;</h3>
 			<div class="row order_d_inner">
 				<div class="col-lg-4">
 					<div class="details_item">
-						<h4>Order Info</h4>
+						
+						<h4>Thông Tin Đặt Hàng</h4>
 						<ul class="list">
-							<li><a href="#"><span>Order number</span> : 60235</a></li>
-							<li><a href="#"><span>Date</span> : Los Angeles</a></li>
-							<li><a href="#"><span>Total</span> : USD 2210</a></li>
-							<li><a href="#"><span>Payment method</span> : Check payments</a></li>
+							<li><a href="#"><span>Mã Đơn Hàng</span> : 60235</a></li>
+							<li><a href="#"><span>Thời Gian</span>   : Los Angeles</a></li>
+							<li><a href="#"><span>Tổng Tiền</span>   : 7.5000.000 VND</a></li>
+							<li><a href="#"><span>Phương Thức Thanh Toán</span> : Ngân Hàng</a></li>
 						</ul>
 					</div>
 				</div>
 				<div class="col-lg-4">
 					<div class="details_item">
-						<h4>Billing Address</h4>
+						<h4>Thông Tin Khách Hàng</h4>
 						<ul class="list">
 							<li><a href="#"><span>Street</span> : 56/8</a></li>
 							<li><a href="#"><span>City</span> : Los Angeles</a></li>
@@ -46,7 +47,7 @@ function Confirmation(){
 				</div>
 				<div class="col-lg-4">
 					<div class="details_item">
-						<h4>Shipping Address</h4>
+						<h4>Địa Chỉ Nhận Hàng</h4>
 						<ul class="list">
 							<li><a href="#"><span>Street</span> : 56/8</a></li>
 							<li><a href="#"><span>City</span> : Los Angeles</a></li>
@@ -57,14 +58,15 @@ function Confirmation(){
 				</div>
 			</div>
 			<div class="order_details_table">
-				<h2>Order Details</h2>
+				<h2>Chi Tiết Đặt Hàng</h2>
 				<div class="table-responsive">
 					<table class="table">
 						<thead>
 							<tr>
-								<th scope="col">Product</th>
-								<th scope="col">Quantity</th>
-								<th scope="col">Total</th>
+								<th scope="col">Sản Phẩm</th>
+								<th scope="col">Ảnh</th>
+								<th scope="col">Số Lượng</th>
+								<th scope="col">Tổng Cộng</th>
 							</tr>
 						</thead>
 						<tbody>
@@ -73,7 +75,10 @@ function Confirmation(){
 									<p>Pixelstore fresh Blackberry</p>
 								</td>
 								<td>
-									<h5>x 02</h5>
+									<h5>Ảnh </h5>
+								</td>
+								<td>
+									<p>2</p>
 								</td>
 								<td>
 									<p>$720.00</p>
@@ -84,7 +89,10 @@ function Confirmation(){
 									<p>Pixelstore fresh Blackberry</p>
 								</td>
 								<td>
-									<h5>x 02</h5>
+									<h5>Ảnh</h5>
+								</td>
+								<td>
+									<p>2</p>
 								</td>
 								<td>
 									<p>$720.00</p>
@@ -95,7 +103,10 @@ function Confirmation(){
 									<p>Pixelstore fresh Blackberry</p>
 								</td>
 								<td>
-									<h5>x 02</h5>
+									<h5>Ảnh</h5>
+								</td>
+								<td>
+									<p>2</p>
 								</td>
 								<td>
 									<p>$720.00</p>
@@ -103,7 +114,7 @@ function Confirmation(){
 							</tr>
 							<tr>
 								<td>
-									<h4>Subtotal</h4>
+									<h4>Tổng giá sản phẩm</h4>
 								</td>
 								<td>
 									<h5></h5>
@@ -114,7 +125,7 @@ function Confirmation(){
 							</tr>
 							<tr>
 								<td>
-									<h4>Shipping</h4>
+									<h4>Phí Vận Chuyển</h4>
 								</td>
 								<td>
 									<h5></h5>
@@ -125,7 +136,7 @@ function Confirmation(){
 							</tr>
 							<tr>
 								<td>
-									<h4>Total</h4>
+									<h4>Tổng giá Đơn Hàng</h4>
 								</td>
 								<td>
 									<h5></h5>
