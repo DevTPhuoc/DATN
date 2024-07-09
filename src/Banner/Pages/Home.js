@@ -5,46 +5,14 @@ import c1 from '../../img/category/c1.jpg'
 import { products } from '../../data/product';
 import { NavLink } from "react-router-dom";
 function Home() {
-	const [selectedCategory, setCategory] = useState(null);
-	const [isShowModal, setShowModal] = useState(false);
-	const [selectedProduct, setProduct] = useState(null);
-	const [cart, setCart] = useState([]);
-	const [isShowCart, setShowCart] = useState(false);
+	
 
-	const onClickCategoryHandler = (cat_id) => {
-		setCategory(cat_id);
-	};
-
-	const onClickProductHandler = (product) => {
-		setProduct(product);
-		setShowModal(true);
-	};
-
-	const closeModal = () => {
-		setShowModal(false);
-	};
-	const onAddtoCartHandler = (product) => {
-		if (cart.indexOf(product) !== -1) return null;
-		const arr = [...cart];
-		product.amount = 1;
-		arr.push(product);
-		setCart([...arr]);
-	};
-
-	useEffect(() => {
-		console.log(cart);
-	});
 	const containerStyle = {
 		position: 'absolute',
 		right: '-500px	',
 		top: '200px',
 	};
-	let filteredProducts = [...products];
-	if (selectedCategory != null) {
-		filteredProducts = products.filter(
-			(product) => product.category_id == selectedCategory
-		);
-	}
+	
 	return (
 		<>
 			<div class="col-lg-7 subbg">
@@ -271,15 +239,15 @@ function Home() {
 									<div class="single-product">
 										<img class="img-fluid" src="img/product/p6.jpg" alt=""></img>
 										<div class="product-details">
-											{products.map((item) =>
+											
 												<div className='abc'>
 													<div class="price">
 														<h6></h6>
 														
-														<h6>{item.name}</h6>
-														<h6 class="l-through">{item.price}</h6>
+														<h6></h6>
+														<h6 class="l-through"></h6>
 													</div>
-												</div>)}
+												</div>
 											<h6>addidas New Hammer sole
 												for Sports person</h6>
 											<div class="price">

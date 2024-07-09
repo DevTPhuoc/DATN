@@ -1,6 +1,8 @@
 import { NavLink } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 function Header({ soluong, setShowCart }) {
+	const auth = useSelector(state=>state.auth);
 	const onShowCartHandler = () => {
 		setShowCart(true);
 	};
@@ -11,7 +13,7 @@ function Header({ soluong, setShowCart }) {
 					<nav class="navbar navbar-expand-lg navbar-light main_box">
 						<div class="container">
 
-							<a class="navbar-brand logo_h" href="index.html"><img src="../img/logo.png" alt=""></img></a>
+							<a class="navbar-brand logo_h" href="index.html"><img src="" alt=""></img> {auth.isAuthenticated?auth.user.account_name:""}    </a>
 							<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
 								<a class="icon-bar" href="ShopCategory"><span class="icon-bar"></span></a>
 								<span class="icon-bar"></span>
@@ -19,16 +21,16 @@ function Header({ soluong, setShowCart }) {
 							</button>
 							<div class="collapse navbar-collapse offset" id="navbarSupportedContent">
 								<ul class="nav navbar-nav menu_nav ml-auto">
-									<li class="nav-item active"><NavLink to="/" className="nav-link active"> Trang Chủ</NavLink></li>
-									<li class="nav-item submenu dropdown">
-										<a href="ShopCategory" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Cửa Hàng</a>
+									<NavLink class="nav-item" className="nav-link active" to="/" > Trang chủ</NavLink>
+									<l class="nav-item submenu dropdown">
+									<a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><NavLink to="/ShopCategory" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Cửa Hàng</NavLink></a>	
 										<ul class="dropdown-menu">
-											<li class="nav-item"><NavLink to="/ProductDetail " className="nav-link active">Chi Tiết Sản Phẩm</NavLink></li>
-											<li class="nav-item"><NavLink to="/ProductCheckout " className="nav-link active">Trang Thanh Toán</NavLink></li>
-											<li class="nav-item"><NavLink to="/ShoppingCart " className="nav-link active">Giỏ Hàng</NavLink></li>
-											<li class="nav-item"><NavLink to="/Confirmation " className="nav-link active">Thông Tin Đơn Hàng</NavLink></li>
+											<NavLink  class="nav-item" to="/ProductDetail " className="nav-link active">Chi Tiết Sản Phẩm</NavLink>
+											<NavLink class="nav-item" to="/ProductCheckout " className="nav-link active">Trang Thanh Toán</NavLink>
+											<NavLink class="nav-item" to="/ShoppingCart " className="nav-link active">Giỏ Hàng</NavLink>
+										      <NavLink class="nav-item" to="/Confirmation " className="nav-link active">Thông Tin Đơn Hàng</NavLink>
 										</ul>
-									</li>
+									</l>
 									<li class="nav-item submenu dropdown">
 										<a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Tin Tức</a>
 										<ul class="dropdown-menu" >

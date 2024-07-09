@@ -1,7 +1,58 @@
+import React, { useState } from 'react';
+
+import { useParams, useSearchParams } from "react-router-dom";
+
+import { useEffect } from "react";
 import { NavLink } from "react-router-dom";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
+import toast, { Toaster } from 'react-hot-toast'
 import lg from '../../../img/login.jpg';
 
-function Login(){
+
+function Register(){
+    const navigate = useNavigate()
+	const [accountName,setAccountName] = useState('')
+	const [password,setPassword] = useState('')
+	const onChangeUserName = (e) => {
+		setAccountName(e.target.value);
+	}
+	const onChangePassword = (e) => {
+		setPassword(e.target.value);
+		
+		
+		}
+    const handleRegister = async(e) => {
+		e.preventDefault();
+     if(!accountName||!password ) {
+
+      return toast.error('Please enter full fill')
+     }
+ 
+    
+      const res= await axios.post('http://127.0.0.1:8000/api/register',{
+       
+      
+		account_name : accountName,password : password 
+		
+		
+    } );
+	navigate("/Login")
+
+    const {data}= await res;
+ 
+    if(data.message==='Register successful'  )
+    {
+    toast.success('Register successful')
+    setAccountName('');
+    setPassword('');
+
+    }
+    else
+    {
+      toast.error('bi sai r ma')
+    }
+    };
     return (
         <>
         <section class="banner-area organic-breadcrumb">
@@ -35,19 +86,14 @@ function Login(){
 				<div class="col-lg-6">
 					<div class="login_form_inner">
 						<h3>Đăng Ký</h3>
-						<form class="row login_form" action="contact_process.php" method="post" id="contactForm" novalidate="novalidate">
+						<form class="row login_form" onSubmit={handleRegister} id="contactForm" novalidate="novalidate">
 							<div class="col-md-12 form-group">
-								<input type="text" class="form-control" id="name" name="name" placeholder="Username" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Username'"/>
+								<input  type="accountName"  value={accountName} onChange={onChangeUserName}  class="form-control" id="accountName" name="accountName" placeholder="accountName" />
 							</div>
 							<div class="col-md-12 form-group">
-								<input type="text" class="form-control" id="name" name="name" placeholder="Password" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Password'"/>
+								<input   value={password} onChange={onChangePassword} type="password" class="form-control" id="password" name="password" placeholder="Password" />
 							</div>
-							<div class="col-md-12 form-group">
-								<input type="text" class="form-control" id="name" name="name" placeholder="Password" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Password'"/>
-							</div>
-							<div class="col-md-12 form-group">
-								<input type="text" class="form-control" id="name" name="name" placeholder="Password" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Password'"/>
-							</div>
+							
 							<div class="col-md-12 form-group">
 								<div class="creat_account">
 									<input type="checkbox" id="f-option2" name="selector"/>
@@ -67,4 +113,4 @@ function Login(){
         </>
     );
 }
-export default Login;
+export default Register;

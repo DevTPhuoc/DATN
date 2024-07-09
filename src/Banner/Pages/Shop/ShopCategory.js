@@ -1,7 +1,134 @@
 import { NavLink } from "react-router-dom";
+import { useState , useEffect } from "react";
+import  axios  from "axios";
+import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { useSearchParams } from "react-router-dom";
+import { useSelector } from "react-redux";
+import toast from "react-hot-toast";
+import { addToCart } from "../../../reducer/cartReducer";
+import { products } from "../../../data/product";
+
 
 function ShopCategory() {
+	const cartProducts = useSelector(state => state.cart.items);
+	const navigate = useNavigate();
+	const [searchParams, setSearchParams] = useSearchParams();
+    const type = searchParams.get('type');
+    const  auth = useSelector(state=>state.auth);
+    const [sanPham, setSanPham] = useState([]);
+    const [loaiSP, setLoaiSP] = useState([]);
+    const dispatch = useDispatch();
+    const addCart = async (products) => {
+		if (!auth.isAuthenticated) {
+            toast.error('Please login');
+            return;
+        }
+
+        const dataToSend = {
+            user_id: auth.user.id,
+            quantity: 1,
+            product_id: products.id,
+            price: products.selling_price
+        };
+console.log(auth);
+        try {
+            const response = await axios.post('http://127.0.0.1:8000/api/Addcarts', dataToSend);
+            const { data } = response.data;
+
+            toast.success(`Added ${data.product_name} to cart`);
+            // Nếu bạn muốn điều hướng tới trang giỏ hàng sau khi thêm sản phẩm thành công
+            // navigate('/ShoppingCart');
+            
+        } catch (error) {
+            console.log(error.message);
+            toast.error('Failed to add product to cart');
+        }
+    };
+	const getTypeProducts = (type) => {
+		searchParams.set('type', type);
+		setSearchParams(searchParams);
+	}
+
+    useEffect(() => {
+        const getAllProducts = async (type) => {
+            try {
+                let response;
+                if (!type) {
+                    response = await axios.get('http://127.0.0.1:8000/api/san-pham');
+                } else {
+                    response = await axios.get(`http://127.0.0.1:8000/api/san-pham-theo-loai/${type}`);
+
+                }
+                const { data } = response.data;
+                setSanPham(data ? data : []);
+            } catch (error) {
+                console.error("Error fetching products:", error);
+            }
+        };
+
+        const getTypeProducts = async () => {
+            try {
+                const response = await axios.get('http://127.0.0.1:8000/api/loai-san-pham');
+                const { data } = response.data;
+                setLoaiSP(data ? data : []);
+            } catch (error) {
+                console.error("Error fetching product types:", error);
+            }
+        };
+
+        getAllProducts(type);
+        getTypeProducts();
+    }, [type]);
+	const dsSanPham = sanPham?.map(product =>
+		
 	
+		<div class="col-lg-4 col-md-6">
+		<div class="single-product">
+			<img class="img-fluid" src={product.images_product_id} alt="" />
+			<div class="product-details">
+				<h6>{product.name}</h6>
+				<div class="price">
+					<h6>{}</h6>
+					<h6 class="l-through">{product.selling_price}</h6>
+				</div>
+				<div class="prd-bottom">
+                     
+					<div  class="social-info" onClick={()=>addCart(product)}>
+						<span class="ti-bag"></span>
+						<p class="hover-text">add to bag</p>
+					</div>
+					<a href="" class="social-info">
+						<span class="lnr lnr-heart"></span>
+						<p class="hover-text">Wishlist</p>
+					</a>
+					<a href="" class="social-info">
+						<span class="lnr lnr-sync"></span>
+						<p class="hover-text">compare</p>
+					</a>
+					<a href="" class="social-info">
+						<span class="lnr lnr-move"></span>
+						<p class="hover-text">view more</p>
+					</a>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+		
+)
+const DSLoaiSP = loaiSP.map(productLoai =>
+	<div class="card">
+		<div onClick={()=>getTypeProducts(productLoai.id)} >
+			{productLoai.name}
+		</div>
+	  
+  
+</div>
+	 )
+
+
 	return (
 		<>
 			<section class="banner-area organic-breadcrumb">
@@ -35,11 +162,7 @@ function ShopCategory() {
 								<div class="head">Brands</div>
 								<form action="#">
 									<ul>
-										<li class="filter-list"><input class="pixel-radio" type="radio" id="apple" name="brand" /><label for="apple">Apple<span>(29)</span></label></li>
-										<li class="filter-list"><input class="pixel-radio" type="radio" id="asus" name="brand" /><label for="asus">Asus<span>(29)</span></label></li>
-										<li class="filter-list"><input class="pixel-radio" type="radio" id="gionee" name="brand" /><label for="gionee">Gionee<span>(19)</span></label></li>
-										<li class="filter-list"><input class="pixel-radio" type="radio" id="micromax" name="brand" /><label for="micromax">Micromax<span>(19)</span></label></li>
-										<li class="filter-list"><input class="pixel-radio" type="radio" id="samsung" name="brand" /><label for="samsung">Samsung<span>(19)</span></label></li>
+									{DSLoaiSP}
 									</ul>
 								</form>
 							</div>
@@ -88,198 +211,8 @@ function ShopCategory() {
 
 						<section class="lattest-product-area pb-40 category-list">
 							<div class="row">
-								<div class="col-lg-4 col-md-6">
-									<div class="single-product">
-										<img class="img-fluid" src="img/product/p1.jpg" alt="" />
-										<div class="product-details">
-											<h6>addidas New Hammer sole
-												for Sports person</h6>
-											<div class="price">
-												<h6>$150.00</h6>
-												<h6 class="l-through">$210.00</h6>
-											</div>
-											<div class="prd-bottom">
-
-												<a href="" class="social-info">
-													<span class="ti-bag"></span>
-													<p class="hover-text">add to bag</p>
-												</a>
-												<a href="" class="social-info">
-													<span class="lnr lnr-heart"></span>
-													<p class="hover-text">Wishlist</p>
-												</a>
-												<a href="" class="social-info">
-													<span class="lnr lnr-sync"></span>
-													<p class="hover-text">compare</p>
-												</a>
-												<a href="" class="social-info">
-													<span class="lnr lnr-move"></span>
-													<p class="hover-text">view more</p>
-												</a>
-											</div>
-										</div>
-									</div>
-								</div>
-								<div class="col-lg-4 col-md-6">
-									<div class="single-product">
-										<img class="img-fluid" src="img/product/p2.jpg" alt="" />
-										<div class="product-details">
-											<h6>addidas New Hammer sole
-												for Sports person</h6>
-											<div class="price">
-												<h6>$150.00</h6>
-												<h6 class="l-through">$210.00</h6>
-											</div>
-											<div class="prd-bottom">
-
-												<a href="" class="social-info">
-													<span class="ti-bag"></span>
-													<p class="hover-text">add to bag</p>
-												</a>
-												<a href="" class="social-info">
-													<span class="lnr lnr-heart"></span>
-													<p class="hover-text">Wishlist</p>
-												</a>
-												<a href="" class="social-info">
-													<span class="lnr lnr-sync"></span>
-													<p class="hover-text">compare</p>
-												</a>
-												<a href="" class="social-info">
-													<span class="lnr lnr-move"></span>
-													<p class="hover-text">view more</p>
-												</a>
-											</div>
-										</div>
-									</div>
-								</div>
-								<div class="col-lg-4 col-md-6">
-									<div class="single-product">
-										<img class="img-fluid" src="img/product/p3.jpg" alt="" />
-										<div class="product-details">
-											<h6>addidas New Hammer sole
-												for Sports person</h6>
-											<div class="price">
-												<h6>$150.00</h6>
-												<h6 class="l-through">$210.00</h6>
-											</div>
-											<div class="prd-bottom">
-
-												<a href="" class="social-info">
-													<span class="ti-bag"></span>
-													<p class="hover-text">add to bag</p>
-												</a>
-												<a href="" class="social-info">
-													<span class="lnr lnr-heart"></span>
-													<p class="hover-text">Wishlist</p>
-												</a>
-												<a href="" class="social-info">
-													<span class="lnr lnr-sync"></span>
-													<p class="hover-text">compare</p>
-												</a>
-												<a href="" class="social-info">
-													<span class="lnr lnr-move"></span>
-													<p class="hover-text">view more</p>
-												</a>
-											</div>
-										</div>
-									</div>
-								</div>
-								<div class="col-lg-4 col-md-6">
-									<div class="single-product">
-										<img class="img-fluid" src="img/product/p4.jpg" alt="" />
-										<div class="product-details">
-											<h6>addidas New Hammer sole
-												for Sports person</h6>
-											<div class="price">
-												<h6>$150.00</h6>
-												<h6 class="l-through">$210.00</h6>
-											</div>
-											<div class="prd-bottom">
-
-												<a href="" class="social-info">
-													<span class="ti-bag"></span>
-													<p class="hover-text">add to bag</p>
-												</a>
-												<a href="" class="social-info">
-													<span class="lnr lnr-heart"></span>
-													<p class="hover-text">Wishlist</p>
-												</a>
-												<a href="" class="social-info">
-													<span class="lnr lnr-sync"></span>
-													<p class="hover-text">compare</p>
-												</a>
-												<a href="" class="social-info">
-													<span class="lnr lnr-move"></span>
-													<p class="hover-text">view more</p>
-												</a>
-											</div>
-										</div>
-									</div>
-								</div>
-								<div class="col-lg-4 col-md-6">
-									<div class="single-product">
-										<img class="img-fluid" src="img/product/p5.jpg" alt="" />
-										<div class="product-details">
-											<h6>addidas New Hammer sole
-												for Sports person</h6>
-											<div class="price">
-												<h6>$150.00</h6>
-												<h6 class="l-through">$210.00</h6>
-											</div>
-											<div class="prd-bottom">
-
-												<a href="" class="social-info">
-													<span class="ti-bag"></span>
-													<p class="hover-text">add to bag</p>
-												</a>
-												<a href="" class="social-info">
-													<span class="lnr lnr-heart"></span>
-													<p class="hover-text">Wishlist</p>
-												</a>
-												<a href="" class="social-info">
-													<span class="lnr lnr-sync"></span>
-													<p class="hover-text">compare</p>
-												</a>
-												<a href="" class="social-info">
-													<span class="lnr lnr-move"></span>
-													<p class="hover-text">view more</p>
-												</a>
-											</div>
-										</div>
-									</div>
-								</div>
-								<div class="col-lg-4 col-md-6">
-									<div class="single-product">
-										<img class="img-fluid" src="img/product/p6.jpg" alt="" />
-										<div class="product-details">
-											<h6>addidas New Hammer sole
-												for Sports person</h6>
-											<div class="price">
-												<h6>$150.00</h6>
-												<h6 class="l-through">$210.00</h6>
-											</div>
-											<div class="prd-bottom">
-
-												<a href="" class="social-info">
-													<span class="ti-bag"></span>
-													<p class="hover-text">add to bag</p>
-												</a>
-												<a href="" class="social-info">
-													<span class="lnr lnr-heart"></span>
-													<p class="hover-text">Wishlist</p>
-												</a>
-												<a href="" class="social-info">
-													<span class="lnr lnr-sync"></span>
-													<p class="hover-text">compare</p>
-												</a>
-												<a href="" class="social-info">
-													<span class="lnr lnr-move"></span>
-													<p class="hover-text">view more</p>
-												</a>
-											</div>
-										</div>
-									</div>
-								</div>
+								
+							{dsSanPham}
 							</div>
 						</section>
 

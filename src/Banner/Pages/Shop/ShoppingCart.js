@@ -1,10 +1,179 @@
 import { NavLink } from "react-router-dom";
-import { useEffect, useState } from "react";
 import { products } from "../../../data/product";
-
+import axios from "axios";
+import toast from "react-hot-toast";
+import { useSelector } from "react-redux";
+import { useState , useEffect } from "react";
+import { reactHooksModule } from "@reduxjs/toolkit/query/react";
+import { useDispatch } from "react-redux";
+import { setCartItems } from "../../../actions/cartActions";
+import { increaseQuantity,decreaseQuantity } from "../../../actions/cartActions";
 
 function ShoppingCart() {
     
+    const dispatch = useDispatch();
+    const auth = useSelector(state => state.auth);
+    const [delCart, setDelCart]= useState([]);
+     useEffect (()=>{
+       fetchdelCart();
+     },[]);
+     const fetchdelCart= async ()=>{
+
+       try {
+        const response = await axios.get(`http://127.0.0.1:8000/api/Get-cart/${auth.user.id}`);
+        setDelCart(response.data);
+       } catch (error) {
+        console.error('Error fetching cart items:', error);
+
+       }
+       const removeCart = async (itemId) => {
+        try {
+            await axios.delete(`http://127.0.0.1:8000/api/delCart/${itemId}`);
+            const updatedCart = delCart.filter(item => item.id !== itemId);
+            setDelCart(updatedCart);
+        } catch (error) {
+            console.error('Error removing item from cart:', error);
+
+            
+        }
+       
+
+       };
+
+     }
+    const [cartItems,setCartItems]=useState([]);
+    useEffect(() => {
+        // Lấy thông tin giỏ hàng từ API (nếu cần)
+        const fetchCartItems = async () => {
+            try {
+                const response = await axios.get(`http://127.0.0.1:8000/api/Get-cart/${auth.user.id}`);
+                const { data } = response.data;
+                // Cập nhật Redux store với danh sách sản phẩm trong giỏ hàng
+                dispatch(setCartItems(data)); // Gọi action để cập nhật Redux store
+            } catch (error) {
+                console.error("Error fetching cart items:", error);
+            }
+        };
+
+        fetchCartItems(); // Gọi hàm lấy danh sách sản phẩm trong giỏ hàng khi component được tạo
+console.log(fetchCartItems()); 
+    }, [auth.user, dispatch]);
+
+    const calculateTotalPrice = (items) => {
+        return items.reduce((total, item) => {
+            return total + item.price * item.quantity;
+        }, 0);
+    };
+    
+    const totalPrice = calculateTotalPrice(cartItems);
+    
+    const handleIncreaseQuantity = async (itemId) => {
+        try {
+            let itemadd = cartItems.find((item) => item.id === itemId);
+           itemadd.quantity = itemadd.quantity + 1
+            
+            // Cập nhật state với phản hồi từ API
+            setCartItems(cartItems.map((item) => item.id === itemId ? itemadd : item));
+            console.log(itemadd);
+        } catch (error) {
+            console.error('Error increasing quantity:', error);
+        }
+    };
+
+    
+    const handleDecreaseQuantity = async (itemId) => {
+        try {
+            let itemadd = cartItems.find((item) => item.id === itemId);
+            if (itemadd.quantity-1 >= 1) {
+                itemadd.quantity = itemadd.quantity - 1
+                setCartItems(cartItems.map((item) => item.id === itemId ? itemadd: item));
+
+            }
+          
+           
+    
+                // Cập nhật state với phản hồi từ API
+               
+            
+        } catch (error) {
+            console.error('Error decreasing quantity:', error);
+        }
+    };
+    const handleChangquantity = async (itemId) =>{
+     try {
+        let itemadd = cartItems.find((item) => item.id === itemId);
+
+        const response = await axios.post(`http://127.0.0.1:8000/api/edit-Cart/${itemadd.id}` , itemadd);
+        console.log(response);
+        
+        const { data } = response.data;
+
+     } catch (error) {
+        
+     }
+
+    };
+    const removeCart = async (itemId) => {
+        // Cập nhật trạng thái cục bộ ngay lập tức
+        const updatedCart = cartItems.filter(item => item.id !== itemId);
+        setCartItems(updatedCart);
+    
+        // Hiển thị thông báo thành công tạm thời
+        toast.success('Đã xóa sản phẩm khỏi giỏ hàng.');
+    
+        try {
+            // Gọi API để xóa sản phẩm khỏi giỏ hàng
+            await axios.delete(`http://127.0.0.1:8000/api/delCart/${itemId}`);
+        
+            // Cập nhật Redux store sau khi xóa thành công
+        } catch (error) {
+            console.error('Error removing item from cart:', error);
+    
+            // Hiển thị thông báo lỗi nếu API gọi thất bại
+            toast.error('Xóa sản phẩm khỏi giỏ hàng thất bại.');
+            
+            // Phục hồi trạng thái cục bộ (nếu cần thiết)
+            setCartItems(cartItems);
+        }
+    };
+    
+
+
+const renderCartItems = cartItems.map(item => (
+    <div key={item.id} className="single-cart-item">
+       <tr>
+                                        <td>
+                                            <div class="media">
+                                                <div class="d-flex">
+                                                    <img src="img/cart.jpg" alt="" />
+                                                </div>
+                                                <div class="media-body">
+                                                    <p>{item.name}</p>
+                                                </div>
+                                            </div>
+                                        </td>
+                                      
+                                        <td>
+                                        <div className="product_count">
+                    <input type="text" name="qty" id={`qty-${item.id}`} maxLength="12" value={item.quantity} title="Quantity:" className="input-text qty" readOnly />
+                    <button onClick={() => handleIncreaseQuantity(item.id)} className="increase items-count" type="button"><i className="lnr lnr-chevron-up"></i></button>
+                    <button onClick={() => handleDecreaseQuantity(item.id)} className="reduced items-count" type="button"><i className="lnr lnr-chevron-down"></i></button>
+                </div>
+                                        </td>
+                                        <td><button onClick={() => handleChangquantity(item.id)}> Xác nhận  </button></td>
+                                        <td>
+                                            <h5>{item.price}</h5>
+                                        </td>
+                                        <td>
+                                  <button  onClick={() => removeCart(item.id)}> Xóa </button>
+                                        </td>
+                                    </tr>
+    </div>
+)
+
+
+)
+
     return (
         <>
             <section class="banner-area organic-breadcrumb">
@@ -28,38 +197,12 @@ function ShoppingCart() {
                             <table class="table">
                                 <thead>
                                     <tr>
-                                        <th scope="col">Sản Phẩm</th>
-                                        <th scope="col">Giá</th>
-                                        <th scope="col">Số Lượng</th>
-                                        <th scope="col"> Tổng </th>
+                                    {renderCartItems}
+
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
-                                        <td>
-                                            <div class="media">
-                                                <div class="d-flex">
-                                                    <img src="img/cart.jpg" alt="" />
-                                                </div>
-                                                <div class="media-body">
-                                                    <p>Minimalistic shop for multipurpose use</p>
-                                                </div>
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <h5>$360.00</h5>
-                                        </td>
-                                        <td>
-                                            <div class="product_count">
-                                                <input type="text" name="qty" id="sst" maxlength="12" value="1" title="Quantity:" class="input-text qty" />
-                                                <button onclick="var result = document.getElementById('sst'); var sst = result.value; if( !isNaN( sst )) result.value++;return false;" class="increase items-count" type="button"><i class="lnr lnr-chevron-up"></i></button>
-                                                <button onclick="var result = document.getElementById('sst'); var sst = result.value; if( !isNaN( sst ) &amp;&amp; sst > 0 ) result.value--;return false;" class="reduced items-count" type="button"><i class="lnr lnr-chevron-down"></i></button>
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <h5>$720.00</h5>
-                                        </td>
-                                    </tr>
+                                    
 
                                     <tr class="bottom_button">
                                         <td>
@@ -90,7 +233,7 @@ function ShoppingCart() {
                                             <h5>Subtotal</h5>
                                         </td>
                                         <td>
-                                            <h5>$2160.00</h5>
+                                            <h5>{totalPrice}</h5>
                                         </td>
                                     </tr>
                                     <tr class="shipping_area">
@@ -127,8 +270,8 @@ function ShoppingCart() {
                                         <td>
                                             <div class="checkout_btn_inner d-flex align-items-center">
                                                 <a class="primary-btn" href="ShopCategory">Tiếp tục mua sắm</a>
-                                                <a class="primary-btn" href="ProductCheckout"> Trang Thanh Toán </a>
-                                            </div>
+                                                <NavLink className="primary-btn" to="/ProductCheckout">Trang Thanh Toán</NavLink>
+                                                </div>
 
                                         </td>
                                     </tr>

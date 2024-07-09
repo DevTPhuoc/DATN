@@ -1,8 +1,50 @@
 import { NavLink } from "react-router-dom";
 import lg from '../../../img/login.jpg';
-import axios from 'axios';
+import axios from "axios";
+import { useState } from "react";
+import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { login } from "../../../reducer/authSlice";
+
+
+
 function Login() {
+	const navigate = useNavigate();
+    const dispach = useDispatch();
+	const [accountName,setAccountName] = useState('')
+	const [password,setPassword] = useState('')
+
+	const [message, setMessage] = useState('');
+	console.log(message)
+
+	const onChangeUserName = (e) => {
+setAccountName(e.target.value);
+
+
+}
+const onChangePassword = (e) => {
+	setPassword(e.target.value);
 	
+	
+	}
+async function   handleLogin(e) {	
+	e.preventDefault();
+
+	try {
+	const res= await axios.post('http://127.0.0.1:8000/api/Get-user',{account_name : accountName,password : password}) 
+    const {data}=res.data;
+	console.log(data);
+	dispach(login(data));
+	navigate("/home"); 
+
+
+	} catch (e) {setMessage(e.response.data.message || 'Error occurred')}
+      
+      
+
+}
+
 	return (
 		<>
 			<section class="banner-area organic-breadcrumb">
@@ -34,13 +76,18 @@ function Login() {
 						</div>
 						<div class="col-lg-6">
 							<div class="login_form_inner">
+								{message&& <p> {
+									message
+								}
+									
+									</p>}
 								<h3>Đăng Nhập</h3>
-								<form class="row login_form" action="contact_process.php" method="post" id="contactForm" novalidate="novalidate">
+								<form class="row login_form" onSubmit={handleLogin} action="contact_process.php" method="post" id="contactForm" novalidate="novalidate">
 									<div class="col-md-12 form-group">
-										<input type="text" class="form-control" id="name" name="name" placeholder="Username" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Username'" />
+										<input value={accountName} onChange={onChangeUserName} type="text" class="form-control" id="name" name="account_name" placeholder="Username" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Username'" />
 									</div>
 									<div class="col-md-12 form-group">
-										<input type="text" class="form-control" id="name" name="name" placeholder="Password" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Password'" />
+										<input  value={password} onChange={onChangePassword} type="password" class="form-control" id="name" name="password" placeholder="Password" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Password'" />
 										
 									</div>
 									<div class="col-md-12 form-group">

@@ -10,6 +10,8 @@ import './css/magnific-popup.css';
 import './css/main.css.map';
 import './css/nice-select.css';
 import './css/nouislider.min.css';
+import { BrowserRouter as Router, Switch, Redirect } from 'react-router-dom';
+
 
 
 
@@ -30,25 +32,31 @@ import BlogDetail from './Banner/Pages/Blogs/BlogDetail';
 import Login from './Banner/Pages/Page/Login';
 import Tracking from './Banner/Pages/Page/Tracking';
 import Contact from './Banner/Pages/Contact';
+import { Navigate } from 'react-router-dom';
 function App() {
   return (
+    
     <div className="App">
     
     <Header/>
-    <Routes>
-        <Route path="/SignIn" element={<SignIn/>}></Route>
-        <Route path="" element={<Home/>}></Route>
-        <Route path="/ShopCategory" element={<ShopCategory/>}></Route>
-        <Route path="/ProductDetail" element={<ProductDetail/>}></Route>
-        <Route path="/ProductCheckout" element={<ProductCheckout/>}></Route>
-        <Route path="/ShoppingCart" element={<ShoppingCart/>}></Route>
-        <Route path="/Confirmation" element={<Confirmation/>}></Route>
-        <Route path="/Blog" element={<Blog/>}></Route>
-        <Route path="/BlogDetail" element={<BlogDetail/>}></Route>
-        <Route path="/Login" element={<Login/>}></Route>
-        <Route path="/Tracking" element={<Tracking/>}></Route>
-        <Route path="/Contact" element={<Contact/>}></Route>
-    </Routes>
+    
+      <Routes>
+        <Route path="/SignIn" element={<SignIn />} />
+        <Route path="/home" element={<Home />} />
+        <Route path="/" element={<Home />} />
+
+        <Route path="/ShopCategory" element={<ShopCategory />} />
+        <Route path="/ProductDetail" element={<ProductDetail />} />
+        <Route path="/ProductCheckout" element={<ProductCheckout />} />
+        <Route path="/ShoppingCart" element={<ShoppingCart />} />
+        <Route path="/Confirmation" element={<Confirmation />} />
+        <Route path="/Blog" element={<Blog />} />
+        <Route path="/BlogDetail" element={<BlogDetail />} />
+        <Route path="/Login" element={<Login />} />
+        <Route path="/Tracking" element={<Tracking />} />
+        <Route path="/Contact" element={<Contact />} />
+
+      </Routes>
      <Footer/>
     </div>
   );
