@@ -14,14 +14,35 @@ function Register(){
     const navigate = useNavigate()
 	const [accountName,setAccountName] = useState('')
 	const [password,setPassword] = useState('')
+	const [email,setEmail] = useState('')
+	const [fullname,setFullname] = useState('')
+	const [phone,setPhone] = useState('')
+	const [address,setAdress] = useState('')
+
+
 	const onChangeUserName = (e) => {
 		setAccountName(e.target.value);
 	}
 	const onChangePassword = (e) => {
 		setPassword(e.target.value);
 		
-		
 		}
+	const onChangeEmail = (e) => {
+		setEmail(e.target.value);
+			
+			}
+	const onChangeFullname = (e) => {
+		setFullname(e.target.value);
+				
+			}
+	const onChangePhone = (e) => {
+		setPhone(e.target.value);
+				
+				}
+	const onChangeAdress = (e) => {
+		setAdress(e.target.value);
+					
+	}
     const handleRegister = async(e) => {
 		e.preventDefault();
      if(!accountName||!password ) {
@@ -30,10 +51,10 @@ function Register(){
      }
  
     
-      const res= await axios.post('http://127.0.0.1:8000/api/register',{
+      const res= await axios.post(`http://127.0.0.1:8000/api/register`,{
        
       
-		account_name : accountName,password : password 
+		account_name : accountName,password : password  , email:email,fullname:fullname,phone:phone,address:address
 		
 		
     } );
@@ -93,6 +114,22 @@ function Register(){
 							<div class="col-md-12 form-group">
 								<input   value={password} onChange={onChangePassword} type="password" class="form-control" id="password" name="password" placeholder="Password" />
 							</div>
+							<div class="col-md-12 form-group">
+                      <input value={email} onChange={onChangeEmail} type="email" id="email" name="email"  class="form-control"   placeholder="email"/>
+                       </div> 
+
+                      <div class="col-md-12 form-group">
+       						 <input value={fullname} onChange={onChangeFullname} type="text" id="fullname" name="fullname"     class="form-control"  placeholder="fullname"/>
+                                    </div>
+									<div class="col-md-12 form-group">
+                      
+                             <input value={phone} onChange={onChangePhone}  type="phone" id="phone" name="phone"  class="form-control"  placeholder="phone"/>
+                           </div >
+						   <div class="col-md-12 form-group">
+                      <input value={address} onChange={onChangeAdress} id="address" name="address" rows="4"  class="form-control"  placeholder="address"></input>
+                    </div>
+   
+
 							
 							<div class="col-md-12 form-group">
 								<div class="creat_account">

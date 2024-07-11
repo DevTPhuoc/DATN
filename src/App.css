@@ -7175,6 +7175,28 @@ label {
   transition: border .25s linear;
   -webkit-transition: border .25s linear;
 }
+/* Dropdown menu styles */
+.dropdown-menu {
+  position: absolute;
+  z-index: 1000; /* Ensure dropdown is above other content */
+  background-color: #ffffff; /* Background color */
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2); /* Optional: Drop shadow */
+}
+
+.dropdown-menu a {
+  color: #333; /* Link color */
+  padding: 8px 16px; /* Padding inside each link */
+  display: block; /* Make each link a block element */
+  text-decoration: none; /* Remove underline */
+}
+
+.dropdown-menu a:hover {
+  background-color: #f1f1f1; /* Background color on hover */
+}
+
+.dropdown-menu .nav-item:last-child .nav-link {
+  border-bottom: none; /* Optional: Remove bottom border on last item */
+}
 
 .radion_btn .check::before {
   display: block;

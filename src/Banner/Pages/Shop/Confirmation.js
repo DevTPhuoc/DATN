@@ -1,6 +1,42 @@
-import { NavLink } from "react-router-dom";
-
+import { useNavigate, NavLink } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux"
+import toast from "react-hot-toast";
+import axios from "axios";
+import { useState, useEffect } from "react";
 function Confirmation(){
+	const auth = useSelector(state => state.auth);
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+	const [cartItems,setCartItems]=useState([]);
+    useEffect(() => {
+        // Lấy thông tin giỏ hàng từ API (nếu cần)
+        const fetchCartItems = async () => {
+            try {
+                const response = await axios.get(`http://127.0.0.1:8000/api/get-order/${auth.user.id}`);
+                const { data } = response.data;
+                // Cập nhật Redux store với danh sách sản phẩm trong giỏ hàng
+                setCartItems(data); // Gọi action để cập nhật Redux store
+            } catch (error) {
+                console.error("Error fetching cart items:", error);
+            }
+        };
+
+        fetchCartItems(); // Gọi hàm lấy danh sách sản phẩm trong giỏ hàng khi component được tạo
+console.log(fetchCartItems()); 
+    }, [auth.user, dispatch]);
+	const dsCart = cartItems?.map(cart =>
+        <div >
+            <div class="details_item">
+						<h4>Địa Chỉ Nhận Hàng</h4>
+						<ul class="list">
+						
+							<li><a href="#"><span>{cart.totalPrice}</span> : United States</a></li>
+						</ul>
+					</div>
+        </div>
+    );
+	console.log(dsCart);
+
     return(
 
         <>
@@ -12,6 +48,8 @@ function Confirmation(){
 					<nav class="d-flex align-items-center">
 						<a href="index.html">Trang Chủ<span class="lnr lnr-arrow-right"></span></a>
 						<a href="category.html">Thông Tin Đơn Hàng</a>
+						{dsCart}
+
 					</nav>
 				</div>
 			</div>
@@ -46,15 +84,7 @@ function Confirmation(){
 					</div>
 				</div>
 				<div class="col-lg-4">
-					<div class="details_item">
-						<h4>Địa Chỉ Nhận Hàng</h4>
-						<ul class="list">
-							<li><a href="#"><span>Street</span> : 56/8</a></li>
-							<li><a href="#"><span>City</span> : Los Angeles</a></li>
-							<li><a href="#"><span>Country</span> : United States</a></li>
-							<li><a href="#"><span>Postcode </span> : 36952</a></li>
-						</ul>
-					</div>
+				 {dsCart}
 				</div>
 			</div>
 			<div class="order_details_table">

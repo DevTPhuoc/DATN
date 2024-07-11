@@ -22,15 +22,34 @@ function Header({ soluong, setShowCart }) {
 							<div class="collapse navbar-collapse offset" id="navbarSupportedContent">
 								<ul class="nav navbar-nav menu_nav ml-auto">
 									<NavLink class="nav-item" className="nav-link active" to="/" > Trang chủ</NavLink>
-									<l class="nav-item submenu dropdown">
-									<a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><NavLink to="/ShopCategory" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Cửa Hàng</NavLink></a>	
-										<ul class="dropdown-menu">
-											<NavLink  class="nav-item" to="/ProductDetail " className="nav-link active">Chi Tiết Sản Phẩm</NavLink>
-											<NavLink class="nav-item" to="/ProductCheckout " className="nav-link active">Trang Thanh Toán</NavLink>
-											<NavLink class="nav-item" to="/ShoppingCart " className="nav-link active">Giỏ Hàng</NavLink>
-										      <NavLink class="nav-item" to="/Confirmation " className="nav-link active">Thông Tin Đơn Hàng</NavLink>
-										</ul>
-									</l>
+									<li className="nav-item submenu dropdown">
+  <NavLink to="/ShopCategory" className="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+    Cửa Hàng
+  </NavLink>
+  <ul className="dropdown-menu">
+    <li className="nav-item">
+      <NavLink to="/ShopCategory" className="nav-link">
+        Chi Tiết Sản Phẩm
+      </NavLink>
+    </li>
+    <li className="nav-item">
+      <NavLink to="/ProductCheckout" className="nav-link">
+        Trang Thanh Toán
+      </NavLink>
+    </li>
+    <li className="nav-item">
+      <NavLink to="/ShoppingCart" className="nav-link">
+        Giỏ Hàng
+      </NavLink>
+    </li>
+    <li className="nav-item">
+      <NavLink to="/Confirmation" className="nav-link">
+        Thông Tin Đơn Hàng
+      </NavLink>
+    </li>
+  </ul>
+</li>
+
 									<li class="nav-item submenu dropdown">
 										<a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Tin Tức</a>
 										<ul class="dropdown-menu" >
@@ -41,19 +60,26 @@ function Header({ soluong, setShowCart }) {
 
 									<li class="nav-item"><NavLink to="/Contact " className="nav-link active">Liên Hệ</NavLink></li>
 								</ul>
-								<ul class="nav navbar-nav navbar-right">
-									<li class="nav-item">
-										<a href="ShoppingCart" class="cart"><span class="ti-bag" onclick={onShowCartHandler}></span>
-										<span className="soluong">
-											<sup>{soluong}</sup>
-										</span>
-										</a>
-									</li>
-									<li class="nav-item">
-										<button class="search"><span class="lnr lnr-magnifier" id="search"></span></button>
-									</li>
-									<li class="nav-item"><a href="Login" class="cart"><span class="ti-bag"></span></a></li>
-								</ul>
+								<ul className="nav navbar-nav navbar-right">
+            <li className="nav-item">
+                <NavLink to="/ShoppingCart" className="cart">
+                    <span className="ti-bag" ></span>
+                    <span className="soluong">
+                       
+                    </span>
+                </NavLink>
+            </li>
+            <li className="nav-item">
+                <button className="search">
+                    <span className="lnr lnr-magnifier" id="search"></span>
+                </button>
+            </li>
+            <li className="nav-item">
+                <NavLink to="/Login" className="cart">
+                    <span className="ti-bag"></span>
+                </NavLink>
+            </li>
+        </ul>
 							</div>
 						</div>
 					</nav>

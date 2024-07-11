@@ -34,6 +34,7 @@ import Tracking from './Banner/Pages/Page/Tracking';
 import Contact from './Banner/Pages/Contact';
 import { Navigate } from 'react-router-dom';
 function App() {
+  
   return (
     
     <div className="App">
@@ -46,7 +47,7 @@ function App() {
         <Route path="/" element={<Home />} />
 
         <Route path="/ShopCategory" element={<ShopCategory />} />
-        <Route path="/ProductDetail" element={<ProductDetail />} />
+        <Route path="/ProductDetail/:id" element={<ProductDetail />} />
         <Route path="/ProductCheckout" element={<ProductCheckout />} />
         <Route path="/ShoppingCart" element={<ShoppingCart />} />
         <Route path="/Confirmation" element={<Confirmation />} />

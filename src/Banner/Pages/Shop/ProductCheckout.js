@@ -1,12 +1,14 @@
-import { NavLink } from "react-router-dom";
+import { useNavigate, NavLink } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import toast from "react-hot-toast";
 import axios from "axios";
 import { useState, useEffect } from "react";
 
+
 function ProductCheckout() {
     const auth = useSelector(state => state.auth);
     const dispatch = useDispatch();
+    const navigate = useNavigate();
 
     const [dataToSend, setDataToSend] = useState({
         user_id: '',
@@ -17,7 +19,7 @@ function ProductCheckout() {
     });
 
     useEffect(() => {
-        if (auth.user && auth.user.id) {
+        if (auth?.user && auth?.user?.id) {
             setDataToSend(prevState => ({
                 ...prevState,
                 user_id: auth.user.id
@@ -34,13 +36,14 @@ function ProductCheckout() {
 
     const confirmPayment = async (itemId) => {
         console.log('Data to send:', dataToSend);
+       
         try {
             const response = await axios.post(`http://127.0.0.1:8000/api/create-order`, dataToSend);
 
             setPaymentInfo(response.data);
 
             // Clear the cart after successful payment
-            await axios.delete(`http://127.0.0.1:8000/api/delCart/${itemId}`);
+            // await axios.delete(`http://127.0.0.1:8000/api/delCart/${itemId}`);
 
 
             toast.success('Thanh toán thành công!');
@@ -59,24 +62,34 @@ function ProductCheckout() {
     const [orderDetails, setOrderDetails] = useState([]);
 
     useEffect(() => {
+        console.log();
+
         const fetchCartItems = async () => {
+            if(auth.user==null)
+                
+                {
+                return    navigate('/login');
+                
+             
+            }
             try {
                 const response = await axios.get(`http://127.0.0.1:8000/api/Get-cart/${auth.user.id}`);
                 const { data } = response.data;
                 setOrderDetails(data);
+
             } catch (error) {
                 console.error("Error fetching cart items:", error);
             }
         };
 
         fetchCartItems();
-    }, [auth.user.id]);
+    }, []);
 
     const dsOrder = orderDetails?.map(cart =>
         <div key={cart.id}>
             <ul className="list">
                 <li>
-                    <a href="#">{cart.name} <span className="middle">{cart.quantity}</span> <span className="last">{cart.selling_price}</span></a>
+                    <a href="#">{cart.name} <span className="middle">{cart.quantity}</span> <span className="last">{cart.totalPrice}</span></a>
                 </li>
             </ul>
         </div>

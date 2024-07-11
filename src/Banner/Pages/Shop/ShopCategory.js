@@ -8,6 +8,10 @@ import { useSelector } from "react-redux";
 import toast from "react-hot-toast";
 import { addToCart } from "../../../reducer/cartReducer";
 import { products } from "../../../data/product";
+import { useParams } from "react-router-dom";
+import { BrowserRouter as  useHistory } from 'react-router-dom';
+
+import ProductDetail from "./ProductDetails";
 
 
 function ShopCategory() {
@@ -15,11 +19,19 @@ function ShopCategory() {
 	const navigate = useNavigate();
 	const [searchParams, setSearchParams] = useSearchParams();
     const type = searchParams.get('type');
+	const { id } = useParams(); // Lấy id từ URL
+
     const  auth = useSelector(state=>state.auth);
     const [sanPham, setSanPham] = useState([]);
     const [loaiSP, setLoaiSP] = useState([]);
+	const [product, setProduct] = useState([]);
+
     const dispatch = useDispatch();
+
+
+		
     const addCart = async (products) => {
+
 		if (!auth.isAuthenticated) {
             toast.error('Please login');
             return;
@@ -38,17 +50,31 @@ console.log(auth);
 
             toast.success(`Added ${data.product_name} to cart`);
             // Nếu bạn muốn điều hướng tới trang giỏ hàng sau khi thêm sản phẩm thành công
-            // navigate('/ShoppingCart');
+            navigate('/ShoppingCart');
             
         } catch (error) {
             console.log(error.message);
             toast.error('Failed to add product to cart');
         }
     };
+
+
+
+
+
+
+
+
+
+
+    
 	const getTypeProducts = (type) => {
 		searchParams.set('type', type);
 		setSearchParams(searchParams);
 	}
+
+
+      
 
     useEffect(() => {
         const getAllProducts = async (type) => {
@@ -66,7 +92,16 @@ console.log(auth);
                 console.error("Error fetching products:", error);
             }
         };
-
+      const getDeTailproduct = async (type)=>
+	  {
+           try {
+                const response= await axios.get(`http://127.0.0.1:8000/api/thong-tin-san-pham/${type}`);	
+				const { data } = response.data;
+                setProduct(data ? data : []);	
+		   } catch (error) {
+			
+		   }
+	  };
         const getTypeProducts = async () => {
             try {
                 const response = await axios.get('http://127.0.0.1:8000/api/loai-san-pham');
@@ -79,45 +114,56 @@ console.log(auth);
 
         getAllProducts(type);
         getTypeProducts();
+		getDeTailproduct(type);
     }, [type]);
+
+	const handleDetailProduct = () => {
+        // Assuming you have an itemId to pass
+        const itemId = products.id; // Replace this with the correct itemId if needed
+        handleDetailProduct(itemId);
+		console.log(itemId);
+    };
+	
 	const dsSanPham = sanPham?.map(product =>
 		
 	
-		<div class="col-lg-4 col-md-6">
-		<div class="single-product">
-			<img class="img-fluid" src={product.images_product_id} alt="" />
-			<div class="product-details">
-				<h6>{product.name}</h6>
-				<div class="price">
-					<h6>{}</h6>
-					<h6 class="l-through">{product.selling_price}</h6>
-				</div>
-				<div class="prd-bottom">
-                     
-					<div  class="social-info" onClick={()=>addCart(product)}>
-						<span class="ti-bag"></span>
-						<p class="hover-text">add to bag</p>
-					</div>
-					<a href="" class="social-info">
-						<span class="lnr lnr-heart"></span>
-						<p class="hover-text">Wishlist</p>
-					</a>
-					<a href="" class="social-info">
-						<span class="lnr lnr-sync"></span>
-						<p class="hover-text">compare</p>
-					</a>
-					<a href="" class="social-info">
-						<span class="lnr lnr-move"></span>
-						<p class="hover-text">view more</p>
-					</a>
-				</div>
-			</div>
-		</div>
-	</div>
+		<div className="col-lg-4 col-md-6">
+    <div className="single-product">
+        <img className="img-fluid" src={'http://127.0.0.1:8000/img/add/'+product.name_image} alt="" />
+        <div className="product-details">
+            <h6>{product.name}</h6>
+            <div className="price">
+                <h6>{/* Insert any additional price details here */}</h6>
+                <h6>{product.selling_price}</h6>
+            </div>
+            <div className="prd-bottom">
+                <div className="social-info" onClick={() => addCart(product)}>
+                    <span className="ti-bag"></span>
+                    <p className="hover-text">add to bag</p>
+                </div>
+                <a href="" className="social-info">
+                    <span className="lnr lnr-heart"></span>
+                    <p className="hover-text">Wishlist</p>
+                </a>
+                <a href="" className="social-info">
+                    <span className="lnr lnr-sync"></span>
+                    <p className="hover-text">compare</p>
+                </a>
+                <NavLink to={`/ProductDetail/${product.id}`} className="social-info">
+                    <span className="lnr lnr-sync"></span>
+                    <p className="hover-text">view more</p>
+                </NavLink>
+            </div>
+        </div>
+    </div>
+</div>
+
 
 
 		
 )
+
+
 const DSLoaiSP = loaiSP.map(productLoai =>
 	<div class="card">
 		<div onClick={()=>getTypeProducts(productLoai.id)} >
