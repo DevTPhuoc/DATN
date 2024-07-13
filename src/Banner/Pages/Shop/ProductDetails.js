@@ -16,6 +16,7 @@ function ProductDetail() {
         console.log(setProduct);
         
         setLoading(false);
+        console.log(setLoading);
 
       } catch (error) {
         setError(error);
@@ -34,7 +35,7 @@ function ProductDetail() {
 			<div class="row s_product_inner">
 				<div class="col-lg-6">
 					<div class="s_Product_carousel owl-carousel owl-theme owl-loaded">
-          <img className="img-fluid" src={'http://127.0.0.1:8000/img/add/'+product.name_image} alt="" />          
+          <img className="img-fluid" src={`http://127.0.0.1:8000/img/add/${product?.image_name}`} alt="" />
 
 						
 						
@@ -42,37 +43,37 @@ function ProductDetail() {
       <div className="owl-stage" style={{ transform: 'translate3d(-1800px, 0px, 0px)', transition: 'all 0s ease 0s', width: '3150px' }}>
         <div className="owl-item cloned" style={{ width: '450px', marginRight: '0px' }}>
           <div className="single-prd-item">
-            <img className="img-fluid" src={'http://127.0.0.1:8000/img/add/'+product.name_image} alt="" />
+            <img className="img-fluid"  src="" alt="" />
           </div>
         </div>
         <div className="owl-item cloned" style={{ width: '450px', marginRight: '0px' }}>
           <div className="single-prd-item">
-            <img className="img-fluid" src={'http://127.0.0.1:8000/img/add/'+product.name_image}  alt="" />
+            <img className="img-fluid"  src=""  alt="" />
           </div>
         </div>
         <div className="owl-item" style={{ width: '450px', marginRight: '0px' }}>
           <div className="single-prd-item">
-            <img className="img-fluid" src={'http://127.0.0.1:8000/img/add/'+product.name_image} alt="" />
+            <img className="img-fluid"  src="" alt="" />
           </div>
         </div>
         <div className="owl-item" style={{ width: '450px', marginRight: '0px' }}>
           <div className="single-prd-item">
-            <img className="img-fluid" src={'http://127.0.0.1:8000/img/add/'+product.name_image} alt="" />
+            <img className="img-fluid"  src="" alt="" />
           </div>
         </div>
         <div className="owl-item active" style={{ width: '450px', marginRight: '0px' }}>
           <div className="single-prd-item">
-            <img className="img-fluid" src="img/category/s-p1.jpg" alt="" />
+            <img className="img-fluid"  src="" alt="" />
           </div>
         </div>
         <div className="owl-item cloned" style={{ width: '450px', marginRight: '0px' }}>
           <div className="single-prd-item">
-            <img className="img-fluid" src="img/category/s-p1.jpg" alt="" />
+            <img className="img-fluid"  src="" alt="" />
           </div>
         </div>
         <div className="owl-item cloned" style={{ width: '450px', marginRight: '0px' }}>
           <div className="single-prd-item">
-            <img className="img-fluid" src="img/category/s-p1.jpg" alt="" />
+            <img className="img-fluid"  src="" alt="" />
           </div>
         </div>
       </div>
@@ -95,14 +96,17 @@ function ProductDetail() {
 
 				<div class="col-lg-5 offset-lg-1">
 					<div class="s_product_text">
-						<h3>{product?.name}</h3>
-						<h2>{product?.selling_price}</h2>
-					
+						
+          <h3>{product?.name}</h3>
+          <h2>{product?.selling_price}</h2>
 						<p>Mill Oil is an innovative oil filled radiator with the most modern technology. If you are looking for
 							something that can make your interior look awesome, and at the same time give you the pleasant warm feeling
 							during the winter.</p>
 						<div class="product_count">
+          
 							<label for="qty">Quantity:</label>
+
+         
 							<input type="text" name="qty" id="sst" maxlength="12" value="1" title="Quantity:" class="input-text qty"/>
 							<button onclick="var result = document.getElementById('sst'); var sst = result.value; if( !isNaN( sst )) result.value++;return false;" class="increase items-count" type="button"><i class="lnr lnr-chevron-up"></i></button>
 							<button onclick="var result = document.getElementById('sst'); var sst = result.value; if( !isNaN( sst ) &amp;&amp; sst > 0 ) result.value--;return false;" class="reduced items-count" type="button"><i class="lnr lnr-chevron-down"></i></button>

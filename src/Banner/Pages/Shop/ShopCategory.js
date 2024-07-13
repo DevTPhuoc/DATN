@@ -5,9 +5,10 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { useSearchParams } from "react-router-dom";
 import { useSelector } from "react-redux";
-import toast from "react-hot-toast";
 import { addToCart } from "../../../reducer/cartReducer";
 import { products } from "../../../data/product";
+import { toast, ToastContainer } from 'react-toastify';
+
 import { useParams } from "react-router-dom";
 import { BrowserRouter as  useHistory } from 'react-router-dom';
 
@@ -43,13 +44,12 @@ function ShopCategory() {
             product_id: products.id,
             price: products.selling_price
         };
-console.log(auth);
         try {
             const response = await axios.post('http://127.0.0.1:8000/api/Addcarts', dataToSend);
             const { data } = response.data;
 
             toast.success(`Added ${data.product_name} to cart`);
-            // Nếu bạn muốn điều hướng tới trang giỏ hàng sau khi thêm sản phẩm thành công
+           
             navigate('/ShoppingCart');
             
         } catch (error) {
@@ -87,6 +87,7 @@ console.log(auth);
 
                 }
                 const { data } = response.data;
+				
                 setSanPham(data ? data : []);
             } catch (error) {
                 console.error("Error fetching products:", error);
@@ -96,6 +97,7 @@ console.log(auth);
 	  {
            try {
                 const response= await axios.get(`http://127.0.0.1:8000/api/thong-tin-san-pham/${type}`);	
+
 				const { data } = response.data;
                 setProduct(data ? data : []);	
 		   } catch (error) {
@@ -123,41 +125,44 @@ console.log(auth);
         handleDetailProduct(itemId);
 		console.log(itemId);
     };
-	
+	// console.log(sanPham);
 	const dsSanPham = sanPham?.map(product =>
 		
 	
 		<div className="col-lg-4 col-md-6">
-    <div className="single-product">
-        <img className="img-fluid" src={'http://127.0.0.1:8000/img/add/'+product.name_image} alt="" />
-        <div className="product-details">
-            <h6>{product.name}</h6>
-            <div className="price">
-                <h6>{/* Insert any additional price details here */}</h6>
-                <h6>{product.selling_price}</h6>
-            </div>
-            <div className="prd-bottom">
-                <div className="social-info" onClick={() => addCart(product)}>
-                    <span className="ti-bag"></span>
-                    <p className="hover-text">add to bag</p>
-                </div>
-                <a href="" className="social-info">
-                    <span className="lnr lnr-heart"></span>
-                    <p className="hover-text">Wishlist</p>
-                </a>
-                <a href="" className="social-info">
-                    <span className="lnr lnr-sync"></span>
-                    <p className="hover-text">compare</p>
-                </a>
-                <NavLink to={`/ProductDetail/${product.id}`} className="social-info">
-                    <span className="lnr lnr-sync"></span>
-                    <p className="hover-text">view more</p>
-                </NavLink>
-            </div>
-        </div>
-    </div>
-</div>
+		<div className="single-product">
+			<img className="product-image img-fluid" src={`http://127.0.0.1:8000/img/add/${product.image_name}`} alt={product.name} />
+			<div className="product-details">
+				<h6>{product.name}</h6>
+				<div className="price">
+					<h6>{/* Thêm các chi tiết giá khác nếu cần */}</h6>
+					<h6>{product.selling_price}</h6>
+				</div>
+				<div className="prd-bottom">
+					<div className="social-info" onClick={() => addCart(product)}>
+						<span className="ti-bag"></span>
+						<p className="hover-text">Thêm vào giỏ hàng</p>
+						<ToastContainer />
 
+					</div>
+					<a href="#" className="social-info">
+						<span className="lnr lnr-heart"></span>
+						<p className="hover-text">Yêu thích</p>
+					</a>
+					<a href="#" className="social-info">
+						<span className="lnr lnr-sync"></span>
+						<p className="hover-text">So sánh</p>
+					</a>
+					<NavLink to={`/ProductDetail/${product.id}`} className="social-info">
+						<span className="lnr lnr-sync"></span>
+						<p className="hover-text">Xem chi tiết</p>
+					</NavLink>
+				</div>
+			</div>
+		</div>
+		</div>
+
+	
 
 
 		
