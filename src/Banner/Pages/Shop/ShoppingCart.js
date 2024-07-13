@@ -142,16 +142,17 @@ console.log(fetchCartItems());
 const renderCartItems = cartItems.map(item => (
     <div key={item.id} className="single-cart-item">
        <tr>
-                                        <td>
-                                            <div class="media">
-                                                <div class="d-flex">
-                                                    <img src="img/cart.jpg" alt="" />
-                                                </div>
-                                                <div class="media-body">
-                                                    <p>{item.name}</p>
-                                                </div>
-                                            </div>
-                                        </td>
+       <td>
+    <div class="media">
+        <div class="d-flex">
+            <img src={`http://127.0.0.1:8000/img/add/${item?.image_name}`} alt="" style={{ width: '100px', height: '100px', objectFit: 'cover' }} />
+        </div>
+        <div class="media-body">
+            <p>{item.name}</p>
+        </div>
+    </div>
+</td>
+
                                       
                                         <td>
                                         <div className="product_count">
@@ -176,6 +177,8 @@ const renderCartItems = cartItems.map(item => (
 
     return (
         <>
+        
+
             <section class="banner-area organic-breadcrumb">
                 <div class="container">
                     <div class="breadcrumb-banner d-flex flex-wrap align-items-center justify-content-end">
@@ -197,12 +200,12 @@ const renderCartItems = cartItems.map(item => (
                             <table class="table">
                                 <thead>
                                     <tr>
-                                    {renderCartItems}
 
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    
+                                {renderCartItems}
+
 
                                     <tr class="bottom_button">
                                         <td>

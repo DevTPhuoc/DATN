@@ -89,7 +89,7 @@ function ProductCheckout() {
         <div key={cart.id}>
             <ul className="list">
                 <li>
-                    <a href="#">{cart.name} <span className="middle">{cart.quantity}</span> <span className="last">{cart.totalPrice}</span></a>
+                    <a href="#">{cart.product_name} <span className="middle">{cart.quantity}</span> <span className="last">{cart.totalPrice}</span></a>
                 </li>
             </ul>
         </div>
