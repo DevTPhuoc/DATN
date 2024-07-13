@@ -236,7 +236,7 @@ const renderCartItems = cartItems.map(item => (
                                             <h5>{totalPrice}</h5>
                                         </td>
                                     </tr>
-                                    <tr class="shipping_area">
+                                    {/* <tr class="shipping_area">
                                         <td>
 
                                         </td>
@@ -256,7 +256,7 @@ const renderCartItems = cartItems.map(item => (
                                                 </ul>
                                             </div>
                                         </td>
-                                    </tr>
+                                    </tr> */}
                                     <tr class="out_button_area">
                                         <td>
 

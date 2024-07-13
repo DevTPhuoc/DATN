@@ -1,84 +1,99 @@
 import 'tailwindcss/tailwind.css';
+// import OwlCarousel from 'react-owl-carousel';
+// import 'owl.carousel/dist/assets/owl.carousel.css';
+// import 'owl.carousel/dist/assets/owl.theme.default.css';
 import { useEffect, useState } from 'react';
 import bg from '../../img/banner/banner-img.png'
 import c1 from '../../img/category/c1.jpg'
 import { products } from '../../data/product';
 import { NavLink } from "react-router-dom";
 function Home() {
-	
 
+	const [days, setDays] = useState(0);
+	const [hours, setHours] = useState(0);
+	const [minutes, setMinutes] = useState(0);
+	const [seconds, setSeconds] = useState(0);
+
+	useEffect(() => {
+		const countdownDate = new Date('2024-07-20T23:59:59').getTime(); // Thay đổi ngày kết thúc ưu đãi ở đây
+
+		const updateCountdown = () => {
+			const now = new Date().getTime();
+			const distance = countdownDate - now;
+
+			const daysLeft = Math.floor(distance / (1000 * 60 * 60 * 24));
+			const hoursLeft = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+			const minutesLeft = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+			const secondsLeft = Math.floor((distance % (1000 * 60)) / 1000);
+
+			setDays(daysLeft);
+			setHours(hoursLeft);
+			setMinutes(minutesLeft);
+			setSeconds(secondsLeft);
+		};
+
+		const countdownInterval = setInterval(updateCountdown, 1000);
+
+		// Xóa interval khi component unmount để tránh rò rỉ bộ nhớ
+		return () => clearInterval(countdownInterval);
+	}, []);
 	const containerStyle = {
 		position: 'absolute',
 		right: '-500px	',
 		top: '200px',
 	};
-	
+	const [currentImageIndex, setCurrentImageIndex] = useState(0);
+	const images = ['path/to/image1.jpg', 'path/to/image2.jpg', 'path/to/image3.jpg'];
+	const intervalTime = 5000; // Thời gian chuyển đổi, ví dụ sau 5 giây
+
+	useEffect(() => {
+		const interval = setInterval(() => {
+			// Tăng chỉ số hình ảnh hiện tại, vòng lại khi đến hết mảng
+			setCurrentImageIndex(current => (current + 1) % images.length);
+		}, intervalTime);
+
+		return () => clearInterval(interval);
+	}, []);
+
+
 	return (
 		<>
-			<div class="col-lg-7 subbg">
-				<div class="banner-img">
-					<img src={bg} alt="phuoc" style={containerStyle} />
-				</div>
-			</div>
-			<section class="banner-area">
-				<div class="container">
-					<div class="row fullscreen align-items-center justify-content-start" style={{ height: "975px" }}>
-						<div class="col-lg-12">
-							<div class="active-banner-slider owl-carousel owl-theme owl-loaded">
 
-
-								<div class="owl-stage-outer"><div class="owl-stage" style={{ transform: 'translate3d(-2220px, 0px, 0px)' }}><div class="owl-item cloned" style={{ width: '1110px', marginRight: '0px' }}><div class="row single-slide align-items-center d-flex">
-									<div class="col-lg-5 col-md-6">
-										<div class="banner-content">
-											<h1>Nike New <br /> Collection!</h1>
-											<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-												dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation.</p>
-											<div class="add-bag d-flex align-items-center">
-												<a class="add-btn" href=""><span class="lnr lnr-cross"></span></a>
-												<span class="add-text text-uppercase">Add to Bag</span>
+			<section className="banner-area">
+				<div className="container">
+					<div className="row fullscreen align-items-center justify-content-start" style={{ height: "975px" }}>
+						<div className="col-lg-12">
+							{/* <OwlCarousel
+							className="owl-theme"
+							items={1}
+							loop
+							nav
+							autoplay
+							autoplayTimeout={3000}
+							autoplayHoverPause
+							> */}
+							<div className="item">
+								<div className="row single-slide align-items-center d-flex">
+									<div className="col-lg-5 col-md-6">
+										<div className="banner-content">
+											<h1>Sản Phẩm Mới Của Nike!</h1>
+											<p>Chào mừng bạn đến với KARMASHOP Chúng tôi cam kết cung cấp những sản phẩm giày chất lượng cao nhất với mức giá hợp lý nhất.
+												Tại đây, bạn sẽ tìm thấy những mẫu giày phong cách, đa dạng và phù hợp với mọi nhu cầu của bạn.</p>
+											<div className="add-bag d-flex align-items-center">
+												<a className="add-btn" href="#"><span className="lnr lnr-cross"></span></a>
+												<span className="add-text text-uppercase">Add to Bag</span>
 											</div>
-										</div>
+										</div>	
 									</div>
-
-
-								</div></div><div class="owl-item cloned" style={{ width: '1110px', marginRight: '0px' }}><div class="row single-slide">
-									<div class="col-lg-5">
-										<div class="banner-content">
-											<h1>Nike New <br />Collection!</h1>
-											<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-												dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation.</p>
-											<div class="add-bag d-flex align-items-center">
-												<a class="add-btn" href=""><span class="lnr lnr-cross"></span></a>
-												<span class="add-text text-uppercase">Add to Bag</span>
-											</div>
-										</div>
-									</div>
-									
-									<div class="col-lg-7">
-										<div class="banner-img">
-											<img class="img-fluid" src="img/banner/banner-img.png" alt=""></img>
+									<div className="col-lg-7">
+										<div className="banner-img">
+											<img className="img-fluid" src={bg} alt="Banner Image" />
 										</div>
 									</div>
 								</div>
 							</div>
-								<div class="owl-item" style={{ width: '1110px', marginRight: '0px' }}><div class="row single-slide">
-									<div class="col-lg-5">
-										<div class="banner-content">
-											<h1>Nike New <br />Collection!</h1>
-											<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-												dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation.</p>
-											<div class="add-bag d-flex align-items-center">
-												<a class="add-btn" href=""><span class="lnr lnr-cross"></span></a>
-												<span class="add-text text-uppercase">Add to Bag</span>
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-					<div class="owl-controls"><div class="owl-nav"><div class="owl-prev"><img src="img/banner/prev.png"></img></div>
-					<div class="owl-next" ><img src="img/banner/next.png"></img></div></div><div class="owl-dots" style={{ display: "none" }}></div></div></div>
+
+							{/* </OwlCarousel> */}
 						</div>
 					</div>
 				</div>
@@ -95,7 +110,7 @@ function Home() {
 									<img src="img/features/f-icon1.png" alt=""></img>
 								</div>
 								<h6>Giao Hàng Miễn Phí</h6>
-								<p>Free Shipping on all order</p>
+
 							</div>
 						</div>
 
@@ -105,7 +120,7 @@ function Home() {
 									<img src="img/features/f-icon2.png" alt=""></img>
 								</div>
 								<h6>Chính sách hoàn trả</h6>
-								<p>Free Shipping on all order</p>
+
 							</div>
 						</div>
 
@@ -115,7 +130,7 @@ function Home() {
 									<img src="img/features/f-icon3.png" alt=""></img>
 								</div>
 								<h6>Hỗ trợ 24/7</h6>
-								<p>Free Shipping on all order</p>
+
 							</div>
 						</div>
 
@@ -125,7 +140,7 @@ function Home() {
 									<img src="img/features/f-icon4.png" alt=""></img>
 								</div>
 								<h6>Thanh toán an toàn</h6>
-								<p>Free Shipping on all order</p>
+
 							</div>
 						</div>
 					</div>
@@ -222,7 +237,7 @@ function Home() {
 				</div>
 				<div class="spsapramat">
 					<div class="single-product-slider">
-						<div class="container">
+						<div class="container">	
 							<div class="row justify-content-center">
 								<div class="col-lg-6 text-center">
 									<div class="section-title">
@@ -235,19 +250,19 @@ function Home() {
 							</div>
 							<div class="row">
 								<div class="col-lg-3 col-md-6">
-									
+
 									<div class="single-product">
 										<img class="img-fluid" src="img/product/p6.jpg" alt=""></img>
 										<div class="product-details">
-											
-												<div className='abc'>
-													<div class="price">
-														<h6></h6>
-														
-														<h6></h6>
-														<h6 class="l-through"></h6>
-													</div>
+
+											<div className='abc'>
+												<div class="price">
+													<h6></h6>
+
+													<h6></h6>
+													<h6 class="l-through"></h6>
 												</div>
+											</div>
 											<h6>addidas New Hammer sole
 												for Sports person</h6>
 											<div class="price">
@@ -514,53 +529,51 @@ function Home() {
 					</div>
 				</div>
 			</section>
-			<section class="exclusive-deal-area">
-				<div class="container-fluid">
-					<div class="row justify-content-center align-items-center">
-						<div class="col-lg-6 no-padding exclusive-left">
-							<div class="row clock_sec clockdiv" id="clockdiv">
-								<div class="col-lg-12">
+			<section className="exclusive-deal-area">
+				<div className="container-fluid">
+					<div className="row justify-content-center align-items-center">
+						<div className="col-lg-6 no-padding exclusive-left">
+							<div className="row clock_sec clockdiv" id="clockdiv">
+								<div className="col-lg-12">
 									<h1>Ưu đãi hấp dẫn độc quyền sắp kết thúc!</h1>
 									<p>Những người cực kỳ yêu thích hệ thống thân thiện với môi trường.</p>
 								</div>
-								<div class="col-lg-12">
-									<div class="row clock-wrap">
-										<div class="col clockinner1 clockinner">
-											<h1 class="days">150</h1>
-											<span class="smalltext">Days</span>
+								<div className="col-lg-12">
+									<div className="row clock-wrap">
+										<div className="col clockinner1 clockinner">
+											<h1 className="days">{days}</h1>
+											<span className="smalltext">Ngày</span>
 										</div>
-										<div class="col clockinner clockinner1">
-											<h1 class="hours">23</h1>
-											<span class="smalltext">Hours</span>
+										<div className="col clockinner clockinner1">
+											<h1 className="hours">{hours}</h1>
+											<span className="smalltext">Giờ</span>
 										</div>
-										<div class="col clockinner clockinner1">
-											<h1 class="minutes">47</h1>
-											<span class="smalltext">Mins</span>
+										<div className="col clockinner clockinner1">
+											<h1 className="minutes">{minutes}</h1>
+											<span className="smalltext">Phút</span>
 										</div>
-										<div class="col clockinner clockinner1">
-											<h1 class="seconds">59</h1>
-											<span class="smalltext">Secs</span>
+										<div className="col clockinner clockinner1">
+											<h1 className="seconds">{seconds}</h1>
+											<span className="smalltext">Giây</span>
 										</div>
 									</div>
 								</div>
 							</div>
-							<a href="" class="primary-btn">Shop Now</a>
+							<a href="ShopCategory" className="primary-btn">Cửa Hàng</a>
 						</div>
-						<div class="col-lg-6 no-padding exclusive-right">
-							<div class="active-exclusive-product-slider">
-
-								<div class="single-exclusive-slider">
-									<img class="img-fluid" src="img/product/e-p1.png" alt="" />
-									<div class="product-details">
-										<div class="price">
+						<div className="col-lg-6 no-padding exclusive-right">
+							<div className="active-exclusive-product-slider">
+								<div className="single-exclusive-slider">
+									<img className="img-fluid" src="img/product/e-p1.png" alt="" />
+									<div className="product-details">
+										<div className="price">
 											<h6>$150.00</h6>
-											<h6 class="l-through">$210.00</h6>
+											<h6 className="l-through">$210.00</h6>
 										</div>
-										<h4>addidas New Hammer sole
-											for Sports person</h4>
-										<div class="add-bag d-flex align-items-center justify-content-center">
-											<a class="add-btn" href=""><span class="ti-bag"></span></a>
-											<span class="add-text text-uppercase">Add to Bag</span>
+										<h4>addidas New Hammer sole for Sports person</h4>
+										<div className="add-bag d-flex align-items-center justify-content-center">
+											<a className="add-btn" href=""><span className="ti-bag"></span></a>
+											<span className="add-text text-uppercase">Add to Bag</span>
 										</div>
 									</div>
 								</div>
@@ -573,25 +586,28 @@ function Home() {
 			<section class="brand-area section_gap">
 				<div class="container">
 					<div class="row">
-						<a class="col single-img" href="">
-							<img class="img-fluid d-block mx-auto" src="img/brand/1.png" alt="" />
-						</a>
-						<a class="col single-img" href="#">
-							<img class="img-fluid d-block mx-auto" src="img/brand/2.png" alt="" />
-						</a>
-						<a class="col single-img" href="#">
-							<img class="img-fluid d-block mx-auto" src="img/brand/3.png" alt="" />
-						</a>
-						<a class="col single-img" href="#">
-							<img class="img-fluid d-block mx-auto" src="img/brand/4.png" alt="" />
-						</a>
-						<a class="col single-img" href="#">
-							<img class="img-fluid d-block mx-auto" src="img/brand/5.png" alt="" />
-						</a>
+
+						<img class="img-fluid d-block mx-auto" src="img/brand/1.png" alt="" />
+
+
+						<img class="img-fluid d-block mx-auto" src="img/brand/2.png" alt="" />
+
+
+						<img class="img-fluid d-block mx-auto" src="img/brand/3.png" alt="" />
+
+
+						<img class="img-fluid d-block mx-auto" src="img/brand/4.png" alt="" />
+
+
+						<img class="img-fluid d-block mx-auto" src="img/brand/5.png" alt="" />
+
 					</div>
 				</div>
 			</section>
 		</>
+		
 	);
+	
 }
+
 export default Home;

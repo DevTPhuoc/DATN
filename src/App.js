@@ -16,7 +16,6 @@ import { BrowserRouter as Router, Switch, Redirect } from 'react-router-dom';
 
 
 
-
 import Header from './Banner/Header';
 import { Route,Routes } from 'react-router-dom';
 import Footer from './Banner/Footer';
