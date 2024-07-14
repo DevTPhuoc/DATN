@@ -11,39 +11,39 @@ import { login } from "../../../reducer/authSlice";
 
 function Login() {
 	const navigate = useNavigate();
-    const dispach = useDispatch();
-	const [accountName,setAccountName] = useState('')
-	const [password,setPassword] = useState('')
+	const dispach = useDispatch();
+	const [accountName, setAccountName] = useState('')
+	const [password, setPassword] = useState('')
 
 	const [message, setMessage] = useState('');
 	console.log(message)
 
 	const onChangeUserName = (e) => {
-setAccountName(e.target.value);
+		setAccountName(e.target.value);
 
 
-}
-const onChangePassword = (e) => {
-	setPassword(e.target.value);
-	
-	
 	}
-async function   handleLogin(e) {	
-	e.preventDefault();
-
-	try {
-	const res= await axios.post('http://127.0.0.1:8000/api/Get-user',{account_name : accountName,password : password}) 
-    const {data}=res.data;
-	console.log(data);
-	dispach(login(data));
-	navigate("/home"); 
+	const onChangePassword = (e) => {
+		setPassword(e.target.value);
 
 
-	} catch (e) {setMessage(e.response.data.message || 'Error occurred')}
-      
-      
+	}
+	async function handleLogin(e) {
+		e.preventDefault();
 
-}
+		try {
+			const res = await axios.post('http://127.0.0.1:8000/api/Get-user', { account_name: accountName, password: password })
+			const { data } = res.data;
+			console.log(data);
+			dispach(login(data));
+			navigate("/home");
+
+
+		} catch (e) { setMessage(e.response.data.message || 'Error occurred') }
+
+
+
+	}
 
 	return (
 		<>
@@ -76,19 +76,19 @@ async function   handleLogin(e) {
 						</div>
 						<div class="col-lg-6">
 							<div class="login_form_inner">
-								{message&& <p> {
+								{message && <p> {
 									message
 								}
-									
-									</p>}
+
+								</p>}
 								<h3>Đăng Nhập</h3>
 								<form class="row login_form" onSubmit={handleLogin} action="contact_process.php" method="post" id="contactForm" novalidate="novalidate">
 									<div class="col-md-12 form-group">
 										<input value={accountName} onChange={onChangeUserName} type="text" class="form-control" id="name" name="account_name" placeholder="Username" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Username'" />
 									</div>
 									<div class="col-md-12 form-group">
-										<input  value={password} onChange={onChangePassword} type="password" class="form-control" id="name" name="password" placeholder="Password" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Password'" />
-										
+										<input value={password} onChange={onChangePassword} type="password" class="form-control" id="name" name="password" placeholder="Password" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Password'" />
+
 									</div>
 									<div class="col-md-12 form-group">
 										<div class="creat_account">
@@ -98,7 +98,7 @@ async function   handleLogin(e) {
 									</div>
 									<div class="col-md-12 form-group">
 										<button type="submit" value="submit" class="primary-btn">Đăng Nhập</button>
-										
+
 									</div>
 								</form>
 							</div>

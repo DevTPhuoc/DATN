@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom';
 import axios from 'axios';
 
 function ProductDetail() {
+  
   const { id } = useParams();
   const [product, setProduct] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -99,9 +100,7 @@ function ProductDetail() {
 						
           <h3>{product?.name}</h3>
           <h2>{product?.selling_price}</h2>
-						<p>Mill Oil is an innovative oil filled radiator with the most modern technology. If you are looking for
-							something that can make your interior look awesome, and at the same time give you the pleasant warm feeling
-							during the winter.</p>
+						<p>{product?.description}</p>
 						<div class="product_count">
           
 							<label for="qty">Quantity:</label>

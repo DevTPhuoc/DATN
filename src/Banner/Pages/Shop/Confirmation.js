@@ -64,32 +64,23 @@ function Confirmation() {
 	error('Failed to cancel order');
 		}
 	};
-	const dsCart = cartItems.map(cart =>
-		<div>
-			 
-			 <tr key={cart.id} className="text-gray-700 dark:text-gray-400">
-                            <td className="px-4 py-3 text-sm">{cart.fullname}</td>
-                            <td className="px-4 py-3 text-sm">{cart.order_code}</td>
-                            <td className="px-4 py-3 text-sm">{cart.shippingAddress}</td>
-                            <td className="px-4 py-3 text-sm">{renderStatus(cart.role)}</td>
-                            <td className="px-4 py-3 text-sm">{cart.created_at}</td>
-                            <td className="px-4 py-3 text-sm">{cart.phone}</td>
-                            <td className="px-4 py-3 text-sm">{cart.totalPrice}</td>
-							<td>
-                                {cart.status !== 2 && (
-                                    <button onClick={() => cancelOrder(cart.id)}>Hủy đơn hàng</button>
-                                )}
-                            </td>
-                        </tr>
-
-</div>
-
-		  
-	  
-		 )
-   
+	const dsCart = cartItems.map(cart => (
+        <tr key={cart.id} className="text-gray-700 dark:text-gray-400">
+            <td className="px-4 py-3 text-sm">{cart.fullname}</td>
+            <td className="px-4 py-3 text-sm">{cart.order_code}</td>
+            <td className="px-4 py-3 text-sm">{cart.shippingAddress}</td>
+            <td className="px-4 py-3 text-sm">{renderStatus(cart.role)}</td>
+            <td className="px-4 py-3 text-sm">{cart.created_at}</td>
+            <td className="px-4 py-3 text-sm">{cart.phone}</td>
+            <td className="px-4 py-3 text-sm">{cart.totalPrice}</td>
+            <td className="px-4 py-3 text-sm">
+                {cart.role !== 2 && (
+                    <button onClick={() => cancelOrder(cart.id)}>Hủy đơn hàng</button>
+                )}
+            </td>
+        </tr>
+    ));
     console.log(dsCart);
-
     return (
         <>
             <section className="banner-area organic-breadcrumb">
@@ -125,6 +116,7 @@ function Confirmation() {
                         <th className="px-5 py-3">Ngày đặt hàng</th>
                         <th className="px-5 py-3">Số điện thoại</th>
                         <th className="px-5 py-3">Đơn giá</th>
+						<th className="px-5 py-3">Chức Năng</th>
                     </tr>
 						                                {dsCart}
 					</div>

@@ -2,46 +2,46 @@ import React, { useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
 
 function Contact() {
-    useEffect(() => {
-        function initMap() {
-            var mapBox = document.getElementById('mapBox');
-            var lat = parseFloat(mapBox.dataset.lat);
-            var lon = parseFloat(mapBox.dataset.lon);
-            var zoom = parseInt(mapBox.dataset.zoom);
-            var info = mapBox.dataset.info;
-            var mLat = parseFloat(mapBox.dataset.mlat);
-            var mLon = parseFloat(mapBox.dataset.mlon);
+    // useEffect(() => {
+    //     function initMap() {
+    //         var mapBox = document.getElementById('mapBox');
+    //         var lat = parseFloat(mapBox.dataset.lat);
+    //         var lon = parseFloat(mapBox.dataset.lon);
+    //         var zoom = parseInt(mapBox.dataset.zoom);
+    //         var info = mapBox.dataset.info;
+    //         var mLat = parseFloat(mapBox.dataset.mlat);
+    //         var mLon = parseFloat(mapBox.dataset.mlon);
 
-            var map = new google.maps.Map(mapBox, {
-                center: { lat: lat, lng: lon },
-                zoom: zoom
-            });
+    //         var map = new google.maps.Map(mapBox, {
+    //             center: { lat: lat, lng: lon },
+    //             zoom: zoom
+    //         });
 
-            var marker = new google.maps.Marker({
-                position: { lat: mLat, lng: mLon },
-                map: map
-            });
+    //         var marker = new google.maps.Marker({
+    //             position: { lat: mLat, lng: mLon },
+    //             map: map
+    //         });
 
-            var infowindow = new google.maps.InfoWindow({
-                content: info
-            });
+    //         var infowindow = new google.maps.InfoWindow({
+    //             content: info
+    //         });
 
-            marker.addListener('click', function () {
-                infowindow.open(map, marker);
-            });
-        }
+    //         marker.addListener('click', function () {
+    //             infowindow.open(map, marker);
+    //         });
+    //     }
 
-        if (window.google) {
-            initMap();
-        } else {
-            const script = document.createElement('script');
-            script.src = `https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY`;
-            script.async = true;
-            script.defer = true;
-            script.onload = initMap;
-            document.head.appendChild(script);
-        }
-    }, []);
+    //     if (window.google) {
+    //         initMap();
+    //     } else {
+    //         const script = document.createElement('script');
+    //         script.src = `https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY`;
+    //         script.async = true;
+    //         script.defer = true;
+    //         script.onload = initMap;
+    //         document.head.appendChild(script);
+    //     }
+    // }, []);
 
     return (
         <>
