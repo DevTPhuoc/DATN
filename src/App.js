@@ -32,6 +32,7 @@ import BlogDetail from './Banner/Pages/Blogs/BlogDetail';
 import Login from './Banner/Pages/Page/Login';
 import Tracking from './Banner/Pages/Page/Tracking';
 import Contact from './Banner/Pages/Contact';
+import Wishlist from './Banner/Pages/Shop/wishlistCart';
 import { Navigate } from 'react-router-dom';
 function App() {
   
@@ -56,6 +57,8 @@ function App() {
         <Route path="/Login" element={<Login />} />
         <Route path="/Tracking" element={<Tracking />} />
         <Route path="/Contact" element={<Contact />} />
+        <Route path="/wishlistCart" element={<wishlistCart />} />
+
 
       </Routes>
      <Footer/>

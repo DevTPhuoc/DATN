@@ -26,19 +26,7 @@ function ShoppingCart() {
         console.error('Error fetching cart items:', error);
 
        }
-       const removeCart = async (itemId) => {
-        try {
-            await axios.delete(`http://127.0.0.1:8000/api/delCart/${itemId}`);
-            const updatedCart = delCart.filter(item => item.id !== itemId);
-            setDelCart(updatedCart);
-        } catch (error) {
-            console.error('Error removing item from cart:', error);
-
-            
-        }
-       
-
-       };
+      
 
      }
     const [cartItems,setCartItems]=useState([]);

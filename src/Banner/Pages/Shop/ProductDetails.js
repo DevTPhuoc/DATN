@@ -1,13 +1,43 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
+import toast from 'react-hot-toast';
+import { useSelector } from "react-redux";
+import { NavLink, useNavigate } from 'react-router-dom';
+
 
 function ProductDetail() {
   const { id } = useParams();
   const [product, setProduct] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const  auth = useSelector(state=>state.auth);
 
+  const addCart = async (products) => {
+
+		if (!auth.isAuthenticated) {
+            toast.error('Please login');
+            return;
+        }
+
+        const dataToSend = {
+            user_id: auth.user.id,
+            quantity: 1,
+            product_id: products.id,
+            price: products.selling_price
+        };
+        try {
+            const response = await axios.post('http://127.0.0.1:8000/api/Addcarts', dataToSend);
+            const { data } = response.data;
+
+            toast.success(`Added ${data.product_name} to cart`);
+            // navigate('/ShoppingCart');
+            
+        } catch (error) {
+            console.log(error.message);
+            toast.error('Failed to add product to cart');
+        }
+    };
   useEffect(() => {
     const fetchProduct = async () => {
       try {
@@ -112,7 +142,7 @@ function ProductDetail() {
 							<button onclick="var result = document.getElementById('sst'); var sst = result.value; if( !isNaN( sst ) &amp;&amp; sst > 0 ) result.value--;return false;" class="reduced items-count" type="button"><i class="lnr lnr-chevron-down"></i></button>
 						</div>
 						<div class="card_area d-flex align-items-center">
-							<a class="primary-btn" href="#">Add to Cart</a>
+							<a class="primary-btn" href="#"onClick={() => addCart(product)}>Add to Cart</a>
 							<a class="icon_btn" href="#"><i class="lnr lnr lnr-diamond"></i></a>
 							<a class="icon_btn" href="#"><i class="lnr lnr lnr-heart"></i></a>
 						</div>
