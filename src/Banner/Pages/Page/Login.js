@@ -6,14 +6,23 @@ import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { login } from "../../../reducer/authSlice";
+import { logout } from "../../../reducer/authSlice";
+import toast from "react-hot-toast";
+
 
 
 
 function Login() {
 	const navigate = useNavigate();
+
 	const dispach = useDispatch();
 	const [accountName, setAccountName] = useState('')
 	const [password, setPassword] = useState('')
+
+	const dispatch = useDispatch();
+	const [accountName,setAccountName] = useState('')
+	const [password,setPassword] = useState('')
+
 
 	const [message, setMessage] = useState('');
 	console.log(message)
@@ -23,13 +32,21 @@ function Login() {
 
 
 	}
-	const onChangePassword = (e) => {
-		setPassword(e.target.value);
+async function   handleLogin(e) {	
+	e.preventDefault();
+
+	try {
+	const res= await axios.post('http://127.0.0.1:8000/api/Get-user',{account_name : accountName,password : password}) 
+    const {data}=res.data;
+	console.log(data);
+	dispatch(login(data));
+	navigate("/home"); 
 
 
 	}
 	async function handleLogin(e) {
 		e.preventDefault();
+
 
 		try {
 			const res = await axios.post('http://127.0.0.1:8000/api/Get-user', { account_name: accountName, password: password })
@@ -44,6 +61,21 @@ function Login() {
 
 
 	}
+
+}
+const handleLogout = () => {
+    // Xóa token hoặc thông tin xác thực khỏi local storage
+    localStorage.removeItem('token');
+
+    // Dispatch action để xóa thông tin người dùng khỏi Redux
+    dispatch(logout());
+
+    // Hiển thị thông báo
+    toast.success('Đăng xuất thành công!');
+
+    // Chuyển hướng người dùng đến trang đăng nhập
+  };
+
 
 	return (
 		<>

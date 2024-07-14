@@ -7,27 +7,26 @@ import { useSearchParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { addToCart } from "../../../reducer/cartReducer";
 import { products } from "../../../data/product";
-import { toast, ToastContainer } from 'react-toastify';
 
 import { useParams } from "react-router-dom";
 import { BrowserRouter as  useHistory } from 'react-router-dom';
 
 import ProductDetail from "./ProductDetails";
+import toast, { Toaster } from 'react-hot-toast';
 
 
 function ShopCategory() {
-	const cartProducts = useSelector(state => state.cart.items);
 	const navigate = useNavigate();
 	const [searchParams, setSearchParams] = useSearchParams();
     const type = searchParams.get('type');
 	const { id } = useParams(); // Lấy id từ URL
-
     const  auth = useSelector(state=>state.auth);
     const [sanPham, setSanPham] = useState([]);
     const [loaiSP, setLoaiSP] = useState([]);
 	const [product, setProduct] = useState([]);
 
     const dispatch = useDispatch();
+	const notify = () => toast('Here is your toast.');
 
 
 		
@@ -46,14 +45,11 @@ function ShopCategory() {
         };
         try {
             const response = await axios.post('http://127.0.0.1:8000/api/Addcarts', dataToSend);
-            const { data } = response.data;
-
-            toast.success(`Added ${data.product_name} to cart`);
            
+            toast.success(`Added to cart`);
             navigate('/ShoppingCart');
             
         } catch (error) {
-            console.log(error.message);
             toast.error('Failed to add product to cart');
         }
     };
@@ -142,7 +138,6 @@ function ShopCategory() {
 					<div className="social-info" onClick={() => addCart(product)}>
 						<span className="ti-bag"></span>
 						<p className="hover-text">Thêm vào giỏ hàng</p>
-						<ToastContainer />
 
 					</div>
 					<a href="#" className="social-info">

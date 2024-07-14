@@ -20,6 +20,7 @@ function ShoppingCart() {
     }, []);
     const fetchdelCart = async () => {
 
+
         try {
             const response = await axios.get(`http://127.0.0.1:8000/api/Get-cart/${auth.user.id}`);
             setDelCart(response.data);
@@ -34,6 +35,15 @@ function ShoppingCart() {
                 setDelCart(updatedCart);
             } catch (error) {
                 console.error('Error removing item from cart:', error);
+
+
+       try {
+        const response = await axios.get(`http://127.0.0.1:8000/api/Get-cart/${auth.user.id}`);
+        setDelCart(response.data);
+       } catch (error) {
+        console.error('Error fetching cart items:', error);
+
+       }
 
 
             }

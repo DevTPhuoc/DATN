@@ -1,11 +1,23 @@
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
-
+import { useDispatch } from "react-redux";
+import { logout } from "../reducer/authSlice";
 function Header({ soluong, setShowCart }) {
 	const auth = useSelector(state=>state.auth);
+	const dispatch= useDispatch();
+	const navigate = useNavigate();
 	const onShowCartHandler = () => {
 		setShowCart(true);
+	
+    
+		
 	};
+	function Logout (){
+		dispatch(logout());
+		navigate("/login");
+		console.log(auth.user);
+
+	}
 	return (
 		<>
 			<div id="undefined-sticky-wrapper" class="sticky-wrapper" style={{ height: "80px" }}><header class="header_area sticky-header" >
@@ -69,14 +81,22 @@ function Header({ soluong, setShowCart }) {
                     </span>
                 </NavLink>
             </li>
-            <li className="nav-item">
-                <button className="search">
-                    <span className="lnr lnr-magnifier" id="search"></span>
-                </button>
-            </li>
+			<li className="nav-item">
+    <NavLink to="/wishlistCart" className="search">
+        <span className="lnr lnr-magnifier" id="search"></span>
+    </NavLink>
+</li>
+
             <li className="nav-item">
                 <NavLink to="/Login" className="cart">
                     <span className="ti-bag"></span>
+                </NavLink>
+            </li>
+
+			
+            <li className="nav-item"  onClick={Logout}>
+                <NavLink  className="logout">
+                    <span className="ti-bag"  ></span>
                 </NavLink>
             </li>
         </ul>

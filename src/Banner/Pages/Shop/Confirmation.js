@@ -29,22 +29,43 @@ function Confirmation() {
         }
     }, [auth?.user?.id]);
 	const renderStatus = (role) => {
-		if (role === -1) {
-			return <p>Đã hủy</p>;
-		} else if (role === 0) {
-			return <p>Chờ xác nhận</p>;
-		} 
-		else if (role === 1) {
-			return <p>Đã xác nhận</p>;
+		let className, text;
+	
+		switch (role) {
+			case -1:
+				className = 'text-orange-500 bg-orange-100';
+				text = 'Chờ Xác Nhận';
+				break;
+			case 0:
+				className = 'text-purple-600 bg-orange-100';
+				text = 'Đã Xác Nhận';
+				break;
+			case 1:
+				className = 'text-blue-500 bg-blue-300';
+				text = 'Đang Giao Hàng';
+				break;
+			case 2:
+				className = 'text-green-700 bg-green-100';
+				text = 'Đã Giao Hàng';
+				break;
+			case 3:
+				className = 'text-red-700 bg-red-100';
+				text = 'Hủy Đơn';
+				break;
+			default:
+				className = '';
+				text = '';
+				break;
 		}
-		 else if (role === 2) {
-			return <p>Đang giao</p>;
-		} 
-		
-		else {
-			return <p>Trạng thái không xác định</p>; // Xử lý trường hợp khác (nếu cần)
-		}
+	
+		return (
+			<span className={`px-2 py-1 font-semibold leading-tight ${className} rounded-full dark:bg-${className} dark:text-${className}`}>
+				{text}
+			</span>
+		);
 	};
+	
+
 	const cancelOrder = async (orderId) => {
 		try {
 			const response = await axios.post(`http://127.0.0.1:8000/api/cancel-order/${orderId}`);
