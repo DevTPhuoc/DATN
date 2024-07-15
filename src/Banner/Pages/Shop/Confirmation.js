@@ -32,23 +32,23 @@ function Confirmation() {
 		let className, text;
 	
 		switch (role) {
-			case -1:
+			case 0:
 				className = 'text-orange-500 bg-orange-100';
 				text = 'Chờ Xác Nhận';
 				break;
-			case 0:
+			case 1:
 				className = 'text-purple-600 bg-orange-100';
 				text = 'Đã Xác Nhận';
 				break;
-			case 1:
+			case 2:
 				className = 'text-blue-500 bg-blue-300';
 				text = 'Đang Giao Hàng';
 				break;
-			case 2:
+			case 3:
 				className = 'text-green-700 bg-green-100';
 				text = 'Đã Giao Hàng';
 				break;
-			case 3:
+			case -1:
 				className = 'text-red-700 bg-red-100';
 				text = 'Hủy Đơn';
 				break;
@@ -98,6 +98,7 @@ function Confirmation() {
                 {cart.role !== 2 && (
                     <button onClick={() => cancelOrder(cart.id)}>Hủy đơn hàng</button>
                 )}
+				
             </td>
         </tr>
     ));
@@ -146,98 +147,7 @@ function Confirmation() {
 				<div class="col-lg-4">
 				</div>
 			</div>
-			<div class="order_details_table">
-				<h2>Chi Tiết Đặt Hàng</h2>
-				<div class="table-responsive">
-					<table class="table">
-						<thead>
-							<tr>
-								<th scope="col">Sản Phẩm</th>
-								<th scope="col">Ảnh</th>
-								<th scope="col">Số Lượng</th>
-								<th scope="col">Tổng Cộng</th>
-							</tr>
-						</thead>
-						<tbody>
-							<tr>
-								<td>
-									<p>Pixelstore fresh Blackberry</p>
-								</td>
-								<td>
-									<h5>Ảnh </h5>
-								</td>
-								<td>
-									<p>2</p>
-								</td>
-								<td>
-									<p>$720.00</p>
-								</td>
-							</tr>
-							<tr>
-								<td>
-									<p>Pixelstore fresh Blackberry</p>
-								</td>
-								<td>
-									<h5>Ảnh</h5>
-								</td>
-								<td>
-									<p>2</p>
-								</td>
-								<td>
-									<p>$720.00</p>
-								</td>
-							</tr>
-							<tr>
-								<td>
-									<p>Pixelstore fresh Blackberry</p>
-								</td>
-								<td>
-									<h5>Ảnh</h5>
-								</td>
-								<td>
-									<p>2</p>
-								</td>
-								<td>
-									<p>$720.00</p>
-								</td>
-							</tr>
-							<tr>
-								<td>
-									<h4>Tổng giá sản phẩm</h4>
-								</td>
-								<td>
-									<h5></h5>
-								</td>
-								<td>
-									<p>$2160.00</p>
-								</td>
-							</tr>
-							<tr>
-								<td>
-									<h4>Phí Vận Chuyển</h4>
-								</td>
-								<td>
-									<h5></h5>
-								</td>
-								<td>
-									<p>Flat rate: $50.00</p>
-								</td>
-							</tr>
-							<tr>
-								<td>
-									<h4>Tổng giá Đơn Hàng</h4>
-								</td>
-								<td>
-									<h5></h5>
-								</td>
-								<td>
-									<p>$2210.00</p>
-								</td>
-							</tr>
-						</tbody>
-					</table>
-				</div>
-			</div>
+			
 		</div>
 	</section>
         
