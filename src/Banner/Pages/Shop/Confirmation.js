@@ -31,7 +31,7 @@ function Confirmation() {
 	const renderStatus = (role) => {
 		let className, text;
 	
-		switch (role) {
+		switch (role) { 
 			case -1:
 				className = 'text-orange-500 bg-orange-100';
 				text = 'Chờ Xác Nhận';

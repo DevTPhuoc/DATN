@@ -311,7 +311,7 @@ console.log(getAllProducts());
 
 								
 								
-					</div>
+ 					</div>
 
 						</div>
 					</div></div><div class="owl-item active" ><div class="single-product-slider">
