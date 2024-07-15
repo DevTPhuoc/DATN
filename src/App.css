@@ -15,6 +15,67 @@
 
 
 
+
+
+
+
+.new-arrivals-section {
+  margin: 20px;
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+}
+
+.section-title h2 {
+  font-size: 24px;
+  margin-bottom: 10px;
+}
+
+.section-title p {
+  font-size: 16px;
+  color: #666;
+}
+
+.order-list {
+  margin-top: 20px;
+}
+
+.order-item {
+  margin-bottom: 10px;
+}
+
+.order-item .list {
+  list-style: none;
+  padding: 0;
+}
+
+.order-item .list li {
+  display: flex;
+  justify-content: space-between;
+  background-color: #fff;
+  padding: 10px;
+  border-radius: 4px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.order-item .list li a {
+  text-decoration: none;
+  color: #333;
+}
+
+.order-item .list li .product-name {
+  font-weight: bold;
+}
+
+.order-item .list li .middle {
+  margin: 0 10px;
+}
+
+.order-item .list li .last {
+  color: #ff5722;
+}
+
+
 .tong {
   background-color: #000;
   color: #e0e0e0;
